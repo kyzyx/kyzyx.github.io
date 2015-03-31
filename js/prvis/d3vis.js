@@ -125,7 +125,7 @@ var Renderer = function(svg, nodes, edges) {
               g.append('svg:text')
                   .attr('x', 0)
                   .attr('y', 4)
-                  .attr('class', 'id')
+                  .attr('class', 'nodeid')
                   .attr('font-size', getFont())
                   .text(nodetextfunc);
               g.append('svg:title')

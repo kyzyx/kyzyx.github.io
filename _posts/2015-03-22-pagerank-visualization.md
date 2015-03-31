@@ -5,8 +5,6 @@ description: ""
 category: "projects"
 tags: []
 customjs:
-    - http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js
-    - https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js
     - http://d3js.org/d3.v3.min.js
     - prvis/colorbrewer.js
     - prvis/generategraph.js
@@ -16,8 +14,7 @@ customjs:
     - prvis/d3vis.js
     - prvis/init.js
 customstyles:
-    - http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/smoothness/jquery-ui.css
-    - css/prvis/d3vis.css
+    - prvis/d3vis.css
 ---
 {% include JB/setup %}
 
@@ -39,7 +36,7 @@ Pagerank "flows" along the edges between nodes.
 ### Editing the Graph ###
 
 Create a random graph with <input id='numnodes' size='3' maxlength='4' value='10'> nodes:
-<button id='generate'>Generate Graph</button>
+<button id='generate' type="button" class="btn btn-default">Generate Random Graph</button>
 <ul>
     <!--<li>The graph will automatically resize and update pagerank values when you update it.</li>-->
     <li>If a node is too small, hover over it to display the pagerank value</li>
@@ -49,12 +46,17 @@ Create a random graph with <input id='numnodes' size='3' maxlength='4' value='10
     <li>To reposition a node, alt-click the node and drag to its new position</li>
 </ul>
 <hr>
-<div id='animatetypes'>
-    <input type='radio' name='animatetype' id='animatetypecolor' value='color'><label for='animatetypecolor'>Encode Pagerank with node color</label>
-    <input type='radio' name='animatetype' id='animatetypesize' value='size' checked><label for='animatetypesize'>Encode Pagerank with node size</label>
+
+<div class='btn-group' data-toggle='buttons' id='animatetypes'>
+<label class='btn btn-primary'>
+    <input type='radio' name='animatetype' id='animatetypecolor' value='color'>Encode Pagerank with node color</label>
+    </label>
+<label class='btn btn-primary active'>
+    <input type='radio' name='animatetype' id='animatetypesize' value='size'>Encode Pagerank with node size</label>
 </div>
-<button id='animate'>     Animate: Single Node with Pagerank</button>
-<button id='equalanimate'>Animate: Uniform Distribution</button>
+
+<button id='animate' type="button" class="btn btn-default">     Animate: Single Node with Pagerank</button>
+<button id='equalanimate' type="button" class="btn btn-default">Animate: Uniform Distribution</button>
 
 <div id='graph' width='100%'>
 </div>

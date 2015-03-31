@@ -30,8 +30,8 @@ in-air gestural systems have shown low accuracy compared to the mouse;
 however our results have suggested that, when coupled with
 the 3D display space, gestural systems are much faster and more intuitive.
 
-<div class='youtube-container'>
-<iframe src="https://www.youtube.com/embed/pIP1viF2VPE?start=180" frameborder="0"> </iframe>
+<div class='embed-responsive embed-responsive-4by3'>
+<iframe src="https://www.youtube.com/embed/pIP1viF2VPE?start=180" class="embed-responsive-item"> </iframe>
 </div>
 
 ##### Brief demo showing a simple 3D modelling system built on top of Holograsp #####

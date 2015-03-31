@@ -57,7 +57,7 @@ VoronoiSystem = function(thecanvas, theslider) {
             for (var i = 0; i < n; ++i) {
                 that.addPoint(Math.random()*100, Math.random()*100);
             }
-            slider.value = 0;
+            theslider.slider('setValue', 0);
         },
         bounds:function(b) {
             if (!b) return bounds;
@@ -274,14 +274,15 @@ VoronoiSystem = function(thecanvas, theslider) {
         // VORONOI INTERACTION FUNCTIONS
         updateSlider:function() {
             var x = diagram.getline();
-            var val = theslider.slider("option","max")*(x - bounds[0])/(bounds[2]-bounds[0]);
+            var slidermax = theslider.slider('getAttribute',"max");
+            var val = slidermax*(x - bounds[0])/(bounds[2]-bounds[0]);
             if (val < 0) val = 0;
-            if (val > theslider.slider("option","max")) val = theslider.slider("option","max");
-            theslider.slider("option","value", Math.round(val));
+            if (val > slidermax) val = slidermax;
+            theslider.slider('setValue', Math.round(val));
         },
         voronoi:function() {
             diagram = new Voronoi(points);
-            theslider.slider("option","value", 0);
+            theslider.slider('setValue', 0);
         },
         step:function() {
             if (!diagram) diagram = new Voronoi(points);

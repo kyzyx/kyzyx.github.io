@@ -33,44 +33,43 @@ $(document).ready(function() {
         max:1,
         value:0.2,
         step: 0.05,
-        slide:function(ev,ui) {
-            if (prm) {
-                prm.updateAlpha(ui.value);
-                if (!prm.isRunning()) {
-                    prm.init();
-                    prm.converge();
-                }
+        tooltip:'hide',
+    }).on('slide', function(ev) {
+        if (prm) {
+            var v = $('#alphaslider').slider('getValue')
+            prm.updateAlpha(v);
+            if (!prm.isRunning()) {
+                prm.init();
+                prm.converge();
             }
-            $('#alphatext').html(ui.value);
         }
+        $('#alphatext').html(v);
     });
-    $('#alphatext').html($('#alphaslider').slider('value'));
+    $('#alphatext').html($('#alphaslider').slider('getValue'));
     // Initialize slider for update rate
     $('#intervalslider').slider({
         min:0.5,
         max:3,
         value:1.5,
         step:0.5,
-        slide:function(ev,ui) {
-            if (prm) prm.updateIterRate(1000/ui.value);
-            $('#intervaltext').html(ui.value);
-        }
+        tooltip:'hide',
+    }).on('slide', function(ev,ui) {
+        var v = $('#intervalslider').slider('getValue');
+        if (prm) prm.updateIterRate(1000/v);
+        $('#intervaltext').html(v);
     });
-    $('#intervaltext').html($('#intervalslider').slider('value'));
-    prm = Pagerank(svg, r, $('#alphaslider').slider('value'), 1000/$('#intervalslider').slider('value'));
+    $('#intervaltext').html($('#intervalslider').slider('getValue'));
+    prm = Pagerank(svg, r, $('#alphaslider').slider('getValue'), 1000/$('#intervalslider').slider('getValue'));
 
     // Buttons update pageranks
-    $('#animate').button();
     d3.select('#animate').on('click', function() {
         prm.init(r.getGraphManager().getNode(0));
         prm.animate();
     });
-    $('#equalanimate').button();
     d3.select('#equalanimate').on('click', function() {
         prm.init();
         prm.animate();
     });
-    $('#generate').button();
     d3.select('#generate').on('click', function() {
         var n = parseInt($('#numnodes').val());
         if (n < 2) n = 10;
@@ -82,7 +81,7 @@ $(document).ready(function() {
           .attr('width', w)
           .attr('height', h);
         r = Renderer(svg, g);
-        prm = Pagerank(svg, r, $('#alphaslider').slider('value'), 1000/$('#intervalslider').slider('value'));
+        prm = Pagerank(svg, r, $('#alphaslider').slider('getValue'), 1000/$('#intervalslider').slider('getValue'));
         prm.init();
         prm.converge();
         r.getEventManager().setPageRankManager(prm);
@@ -93,8 +92,7 @@ $(document).ready(function() {
     prm.converge();
     r.getEventManager().setPageRankManager(prm);
 
-    $('#animatetypes').buttonset();
-    $('#animatetypes input[type=radio]').change(function() {
+    $('#animatetypes input[type=radio]').on('change', function() {
             var newval = $('#animatetypes input[type=radio]:checked').val();
             if (newval == 'color') {
                 prm.useSize(false);
@@ -105,5 +103,4 @@ $(document).ready(function() {
                 prm.useColors(false);
             }
     });
-
 });

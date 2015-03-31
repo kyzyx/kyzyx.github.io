@@ -5,35 +5,61 @@ description: ""
 category: "projects"
 tags: []
 customjs:
-    - http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js
-    - https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js
     - https://cdn.rawgit.com/google/closure-library/master/closure/goog/base.js
     - voronoi/geometry.js
     - voronoi/voronoi.js
     - voronoi/interaction.js
     - voronoi/init.js
 customstyles:
-    - http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/ui-lightness/jquery-ui.css
 ---
 {% include JB/setup %}
 
-<div id="pointdialog" title="Add points">
-<p>Type in one point on each line, with the two coordinates separated
-by whitespace. Invalid lines will be ignored.</p>
-<br>
-<textarea id="newpoints" rows="10" cols="30"></textarea>
+<div id="pointdialog" class='modal fade' title="Add points" role="dialog">
+    <div class='modal-dialog'>
+        <div class='modal-content'>
+            <div class='modal-header'>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h3 class='modal-title'> Add Points </h3>
+            </div>
+            <div class='modal-body'>
+                Type in one point on each line, with the two coordinates separated
+                by whitespace. Invalid lines will be ignored.
+                <br>
+                <textarea id="newpoints" rows="10" cols="30"></textarea>
+            </div>
+            <div class='modal-footer'>
+                <button type="button" id='closepointsdialog' class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" id='addpointsbutton' class="btn btn-primary">Add Points</button>
+            </div>
+        </div>
+    </div>
 </div>
 
-<div id="boundsdialog" title="Update bounds">
-<label for="xmin">Xmin:</label>
-<input type="text" id="xmin" size='2'/>
-<label for="xmax">Xmax:</label>
-<input type="text" id="xmax" size='2'/>
+<div id="boundsdialog" class='modal fade' title="Update bounds" role="dialog">
+    <div class='modal-dialog'>
+        <div class='modal-content'>
+            <div class='modal-header'>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h3 class='modal-title'>Update Bounds</h3>
+            </div>
+            <div class='modal-body'>
+                <label for="xmin">Xmin:</label>
+                <input type="text" id="xmin" size='3'/>
+                <label for="xmax">Xmax:</label>
+                <input type="text" id="xmax" size='3'/>
+                <br>
 
-<label for="ymin">Ymin:</label>
-<input type="text" id="ymin" size='2'/>
-<label for="ymax">Ymax:</label>
-<input type="text" id="ymax" size='2'/>
+                <label for="ymin">Ymin:</label>
+                <input type="text" id="ymin" size='3'/>
+                <label for="ymax">Ymax:</label>
+                <input type="text" id="ymax" size='3'/>
+            </div>
+            <div class='modal-footer'>
+                <button type="button" id='closeboundsdialog' class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" id='updateboundsbutton' class="btn btn-primary">Update Bounds</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 Fortune's Algorithm is a sweepline algorithm for computing the
@@ -49,44 +75,41 @@ Note that sometimes floating point error causes strange behavior with large
 numbers of points.
 
 [Jump to development notes](#notes)
-
-<input type="button" id="updatebounds" value = "Update Bounds">
-<input type="button" class="voronoianimate" value="Animate sweep line">
+<hr>
+<div class='input-group'>
+    <span class='input-group-btn'>
+        <input id="manual" type="button" class="btn btn-default" value="Type in points">
+    </span>
+    <span class='input-group-btn'>
+        <input id="rand" type="button" class="btn btn-default" value="Generate Random Points">
+    </span>
+    <input type="text" placeholder="Number of random points" class="form-control" id="numpts" size="2"/>
+</div>
+You can also click on the plane to add points manually.
+<hr>
+<div class='btn-toolbar'>
+    <div class='btn-group'>
+        <input type="button" class="voronoianimate btn btn-primary" value="Animate sweep line">
+        <input type="button" class="btn btn-primary" id="step" value="Next sweep line event">
+        <input type="button" class="btn btn-primary" id="complete" value="Compute Voronoi Diagram">
+        <input type="button" class="btn btn-primary" id="restart" value="Reset">
+    </div>
+    <div class='btn-group'>
+        <input type="button" class="btn btn-info" id="updatebounds" value = "Update Bounds">
+    </div>
+</div>
+Drag the slider to control the sweep line.
 <div width="100%">
 <div style="padding:10px 0px">
 <div id="slider"></div>
 </div>
 <canvas id="plane" style="width: 100%; border: 1px solid black;"></canvas><br>
 </div>
-
-<u>Step 1: Input: </u>
-There are three ways of generating input:
-<ul>
-    <li> Generating random points: <input id="numpts" value="10" size="2"/> <input id="rand" type="button" value="Generate Random Points"> </li>
-    <li> Manually entering a list of coordinates: <input id="manual" type="button" value="Manually enter points"></li>
-    <li> Clicking on the plane to add points </li>
-</ul>
-<hr>
-<u>Step 2: Running the algorithm</u>
-There are several ways of viewing the algorithm in progress. The easiest way is to run the animation.
-<ul>
-    <li> Animate the sweep line from left to right:
-    <input type="button" class="voronoianimate" value="Animate sweep line">
-    </li>
-    <li> Drag the sweep line back and forth using the slider underneath the viewport </li>
-    <li> Step from event to event in the priority queue
-    <input type="button" id="step" value="Next event"></li>
-    <li> Go straight to the complete Voronoi Diagram
-    <input type="button" id="complete" value="Compute Voronoi Diagram"> </li>
-    <li> Go back to the beginning of the algorithm <input type="button" id="restart" value="Restart"></li>
-</ul>
-<hr>
 <table><tr>
         <td valign='top'> Event queue:</td><td> Beach line: </td>
     </tr><tr><td>
-    <textarea id="evtq" rows="10" cols="50"></textarea></td><td>
-    <textarea id="beach" rows="10" cols="50"></textarea></td></tr></table>
-
+    <textarea id="evtq" rows="10" cols="40"></textarea></td><td>
+    <textarea id="beach" rows="10" cols="40"></textarea></td></tr></table>
 
 ## <a name="notes"></a>Overview ##
 This interactive javascript implementation of Fortune's algorithm uses

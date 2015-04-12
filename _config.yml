@@ -27,6 +27,7 @@ production_url : ed.ilogues.com
 
 # Enable/disable tracking features for local testing
 enable_comments: true
+enable_tracking: true
 
 # All Jekyll-Bootstrap specific configurations are namespaced into this hash
 #

@@ -25,6 +25,9 @@ author :
 #
 production_url : ed.ilogues.com 
 
+# Enable/disable tracking features for local testing
+enable_comments: true
+
 # All Jekyll-Bootstrap specific configurations are namespaced into this hash
 #
 JB :
@@ -78,9 +81,9 @@ JB :
   # Set 'provider' to false to turn commenting off globally.
   #
   comments :
-    provider : false
+    provider : disqus
     disqus :
-      short_name : jekyllbootstrap
+      short_name : edilogues
     livefyre :
       site_id : 123
     intensedebate :

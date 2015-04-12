@@ -43,6 +43,8 @@
       <li class="next disabled"><a>Next &rarr;</a>
     {% endif %}
     </ul>
-    {% include JB/comments %}
+    {% if site.enable_comments %}
+        {% include JB/comments %}
+    {% endif %}
   </div>
 </div>

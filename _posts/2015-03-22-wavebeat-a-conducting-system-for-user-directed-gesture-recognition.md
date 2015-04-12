@@ -14,7 +14,7 @@ and then WaveBeat will play back a piece of music, following your tempo
 and your chosen gestures in real time.
 
 ## Overview ##
-<img src="{{ BASE_PATH }}/images/research/wavebeat.jpg" width="50%"/>
+<img src="{{ BASE_PATH }}/images/research/wavebeat.jpg" class='img-right'/>
 Many conductor following systems have been designed in the past that use gesture
 recognition and learning algorithms to great effect. Most such systems, however, are based on
 specialized models and are designed and configured by experts in these fields. Being able to

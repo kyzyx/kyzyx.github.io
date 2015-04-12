@@ -7,7 +7,7 @@ tags: []
 ---
 {% include JB/setup %}
 
-[<img src="http://sage-search.appspot.com/static/SAGE.png" width="100%" style="float: none; margin: 10px"/>](http://sage-search.appspot.com)
+[<img src="http://sage-search.appspot.com/static/SAGE.png" />](http://sage-search.appspot.com)
 
 SAGE, the Smarter Academic Graph Explorer, is a search interface for finding
 academic publications.
@@ -84,7 +84,7 @@ with some metric sorting them approximately from left to right. In the case
 of SAGE, we put nodes corresponding to newer publications on the right, so that
 papers on the right tend to cite papers on the left.
 
-<img src="{{ BASE_PATH }}/images/projects/sage/dcg.png" width="100%"/>
+<img src="{{ BASE_PATH }}/images/projects/sage/dcg.png" />
 
 ###### Example of the DCG Layout ######
 

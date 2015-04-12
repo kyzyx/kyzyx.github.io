@@ -5,7 +5,7 @@ title: Edward Zhang
 ---
 {% include JB/setup %}
 
-<img src="{{ BASE_PATH }}/images/home/edzhang.jpg" width="200px" style="float: left; margin: 10px"/>
+<img src="{{ BASE_PATH }}/images/home/edzhang.jpg" class='img-left'/>
 
 #### Graduate Student ####
 

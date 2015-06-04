@@ -63,6 +63,19 @@
   border: 1px solid #4c964d;
   color: #FFF; }
 
+div.image-wrapper {
+    position:relative;
+    margin:10px 10px;
+}
+div.image-caption {
+    margin:10px;
+    padding:5px 5px;
+    bottom:0px;
+    left:0px;
+    background-color:black;
+    color:white;
+    opacity:0.7;
+}
 img {
     width: 100%;
     padding: 10px; }

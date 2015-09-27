@@ -62,7 +62,9 @@ Create a random graph with <input id='numnodes' size='3' maxlength='4' value='10
 </div>
 
 Iterations per second: <span id='intervaltext'></span>
+
 <div id='intervalslider'></div>
 <hr>
 Alpha: <span id='alphatext'></span>
+
 <div id='alphaslider'></div>

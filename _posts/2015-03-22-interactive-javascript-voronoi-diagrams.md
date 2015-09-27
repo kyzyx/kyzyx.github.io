@@ -99,6 +99,7 @@ You can also click on the plane to add points manually.
     </div>
 </div>
 Drag the slider to control the sweep line.
+
 <div width="100%">
 <div style="padding:10px 0px">
 <div id="slider"></div>

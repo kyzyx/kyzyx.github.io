@@ -1,1 +1,1 @@
-jekyll serve --drafts --config=_config.yml,_localconfig.yml
+bundle exec jekyll serve --drafts --config=_config.yml

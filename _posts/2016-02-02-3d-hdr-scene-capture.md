@@ -26,11 +26,18 @@ On the left is a view taken from inside the room, while the right has a top
 view of the scene. Linear tonemapping is applied to the mesh colors, as well
 as a gamma transform.
 
-{% include image.html image="posts/hdrresults/results1.png" caption="Bedroom scene A, lit by window on overcast day. Mesh with 170K vertices. View the scan at <a href='https://skfb.ly/KHuL'>https://skfb.ly/KHuL</a>" %}
+{% include image.html image="posts/hdrresults/results1.png" caption="Bedroom scene A, lit by window on overcast day. Mesh with 170K vertices." %}
+{% include sketchfab_embed.html meshid="2f24eb9731e340598eb78f566fe87e05" %}
 
-{% include image.html image="posts/hdrresults/results2.png" caption="Bedroom scene B, lit by incandescent light on ceiling. Mesh with 120K vertices. View the scan at <a href='https://skfb.ly/KHw9'>https://skfb.ly/KHw9</a>" %}
+---
 
-{% include image.html image="posts/hdrresults/results3.png" caption="Office scene, lit by window on partly cloudy day and 4 incandescent lights on shelves. Mesh with 350K vertices. View the scan at <a href='https://skfb.ly/KHvE'>https://skfb.ly/KHvE</a>" %}
+{% include image.html image="posts/hdrresults/results2.png" caption="Bedroom scene B, lit by incandescent light on ceiling. Mesh with 120K vertices. " %}
+{% include sketchfab_embed.html meshid="b4330e7d02d041f9aaf95510757696e8" %}
+
+---
+
+{% include image.html image="posts/hdrresults/results3.png" caption="Office scene, lit by window on partly cloudy day and 4 incandescent lights on shelves. Mesh with 350K vertices." %}
+{% include sketchfab_embed.html meshid="d004278acc204cc59da3c560c105e33e" %}
 
 ## High Dynamic Range ##
 

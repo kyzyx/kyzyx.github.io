@@ -10,6 +10,8 @@ CONFIG = {
   'layouts' => File.join(SOURCE, "_layouts"),
   'posts' => File.join(SOURCE, "_posts"),
   'drafts' => File.join(SOURCE, "_drafts"),
+  'config_template' => File.join(SOURCE, "_config.yml.tpl"),
+  'config' => File.join(SOURCE, "_config.yml"),
   'post_ext' => "md",
   'theme_package_version' => "0.1.0"
 }
@@ -188,12 +190,16 @@ namespace :theme do
 
       open(File.join(CONFIG['layouts'], File.basename(filename)), 'w') do |page|
         page.puts "---"
-        page.puts File.read(settings_file) if File.exist?(settings_file)
         page.puts "layout: default" unless File.basename(filename, ".html").downcase == "default"
         page.puts "---"
         page.puts "{% include JB/setup %}"
         page.puts "{% include themes/#{theme_name}/#{File.basename(filename)} %}" 
       end
+    end
+    puts "Generating config file '#{CONFIG['config']}'"
+    open(CONFIG['config'], 'w') do |page|
+      page.puts File.read(CONFIG['config_template'])
+      page.puts File.read(settings_file) if File.exist?(settings_file)
     end
     
     puts "=> Theme successfully switched!"

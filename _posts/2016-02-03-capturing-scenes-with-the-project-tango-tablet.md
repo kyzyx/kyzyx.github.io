@@ -3,6 +3,7 @@ layout: post
 title: "Capturing Scenes with the Project Tango Tablet"
 description: ""
 category: 
+customjs: ["https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML"]
 tags: [research, tango]
 ---
 {% include JB/setup %}
@@ -21,6 +22,7 @@ the [IR Leakage in Tango Color Images](#ir) section.
 * [Capture Process](#capture)
 * [Tips](#tips)
 * [IR Leakage in Tango Color Images](#ir)
+* [Full workflow](#workflow)
 
 ## <a name="intro"></a>Introduction: Why Tango? ##
 
@@ -127,7 +129,7 @@ the Tango.
 
 {% include image.html image="posts/capturingsceneswithtango/pattern.png" caption="Structured Light pattern leaking into RGB images" %}
 
-## <a name='ir'></a>IR Leakage in Tango Color Images ###
+## <a name='ir'></a>IR Leakage in Tango Color Images ##
 
 A lot of Tango imagery appears washed out and low contrast. To minimize this effect, stick with daylight and fluorescent lights.
 
@@ -153,3 +155,56 @@ than the visible spectrum.
 
 The comments in [this thread](https://plus.google.com/photos/118297732182242774648/album/6170664392111508801/6170664404117760370) helped lead me on the right path to
 diagnosing this issue.
+
+## <a name='workflow'></a>Full Workflow ##
+For those interested, here's a precise list of what our system does (mostly
+automated after capture). In theory this should let you replicate our
+results (but there's probably a lot of hairy coding in there).
+
+### Capture ###
+
+1. Capture ADF of scene
+2. Dump image and point cloud frames of scene, with poses computed *post capture*
+(vs. during capture) for more reliable estimates
+
+### Depth ###
+
+3. Compute per-frame normals for point clouds via nearest neighbors
+4. Merge point cloud frames using poses
+5. Run Screened Poisson Surface Reconstruction at a depth of 8 or 9
+6. Delete small components (less than 0.1% of the vertices)
+7. Do a few iterations of Taubin smoothing
+
+### HDR Imagery ###
+
+See the [previous post]({% post_url 2016-02-02-3d-hdr-scene-capture %}) for an explanation of these steps.
+
+8. Remove frames showing structured light pattern and grossly overexposed frames
+9. Resize images down to 640x360, and from now on only process a fraction of the
+   frames (usually less than 1500 frames total) for efficiency.
+10. Generate edge masks
+11. Associate non-masked image pixels with mesh vertices. With a high resolution
+    mesh, this means for each image frame, check to see what pixel (if any) a mesh
+    vertex projects onto. Otherwise, just e.g. tracing a ray per pixel and
+    splatting onto nearest vertices might leave holes.
+12. Solve per-channel bundle adjustment assuming linear camera response with a
+    gamma transform, using L2 norm, on 1/2 or 1/3 of the mesh vertices. First
+    channel uses an initialization of all
+    exposures and all radiances equal to 1; subsequent channels are initialized
+    with the previous solution.
+13. Apply the per-channel linear exposures to the original input images
+
+### Generating Sample Meshes ###
+
+14. Generate a confidence image for each input color image.
+    Generally, we don't trust oversaturated or undersaturated pixels, so we use
+    a hat function. For an 8-bit value $$x$$, our per-channel confidence is
+    $$c = 1 - \frac{|x-128|}{128}$$ (carefully chosen so that a saturated pixel
+    has a small but nonzero confidence).
+15. As step 11 above, associate pixels with nonzero confidence to vertices
+16. Take a weighted mean or weighted median of all associated pixels to get
+    a single HDR vertex color. The weight we use is proportional to the confidence
+    and the differential form factor between the vertex and the camera pixel. If
+    $$v$$ is the vector from the vertex to the camera, $$n$$ is
+    the vertex normal, and $$t$$ is the camera vector, then the form factor
+    term is $$\frac{-(v\cdot t)(v\cdot n)}{(v\cdot v)^2}$$ (ref [https://en.wikipedia.org/wiki/View_factor#View_factors_of_differential_areas](https://en.wikipedia.org/wiki/View_factor#View_factors_of_differential_areas))

@@ -21,10 +21,12 @@ bad image frames (which could easily be done automatically).
 
 ## Results ##
 
-The following results are all screenshots taken in Meshlab of colored meshes.
+The following results are all screenshots taken in Meshlab of meshes with
+per-vertex colors (i.e. no textures).
 On the left is a view taken from inside the room, while the right has a top
-view of the scene. Linear tonemapping is applied to the mesh colors, as well
-as a gamma transform.
+view of the scene. Below there is a [Sketchfab](https://sketchfab.com/) embed for
+viewing the mesh. Linear tonemapping is applied to the mesh colors, as well
+as a gamma transform for viewing.
 
 {% include image.html image="posts/hdrresults/results1.png" caption="Bedroom scene A, lit by window on overcast day. Mesh with 170K vertices." %}
 {% include sketchfab_embed.html meshid="2f24eb9731e340598eb78f566fe87e05" %}
@@ -68,7 +70,7 @@ Exposure correction in panorama stitching goes something like this:
 2. Warp the images and project them into a new coordinate space so that
    correspondences overlap. This puts pixels of images into dense correspondence
 3. Each set of pixels in the original images that map to the same warped
-   coordinates should have the same "true" radiance value (which is unknown; any
+   coordinates should have the same "true" radiance value (which is unknown); any
    difference in pixel value should just be due to per-frame camera effects
    (i.e. exposure)
 4. Jointly optimize both the set of "true" radiance values and the per-frame

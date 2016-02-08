@@ -2,7 +2,7 @@
 layout: post
 title: "WaveBeat: A Conducting System for User Directed Gesture Recognition"
 description: ""
-category: "Research"
+category: "research"
 tags: []
 ---
 {% include JB/setup %}

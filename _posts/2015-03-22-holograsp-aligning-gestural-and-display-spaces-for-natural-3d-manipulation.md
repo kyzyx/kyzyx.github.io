@@ -2,7 +2,7 @@
 layout: post
 title: "Holograsp: Aligning Gestural and Display Spaces for Natural 3D Manipulation"
 description: ""
-category: "Research"
+category: "research"
 tags: []
 ---
 {% include JB/setup %}

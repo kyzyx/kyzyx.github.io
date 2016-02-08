@@ -2,7 +2,7 @@
 layout: post
 title: "KIB: Simplifying Gestural Instrument Creation using Widgets"
 description: "Simplifying gestural instrument creation using widgets"
-category: "Research"
+category: "research"
 tags: []
 ---
 {% include JB/setup %}

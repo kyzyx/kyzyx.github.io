@@ -96,6 +96,7 @@ THREE.TrackballControls = function ( object, domElement ) {
 			this.screen.top = box.top + window.pageYOffset - d.clientTop;
 			this.screen.width = box.width;
 			this.screen.height = box.height;
+            this.domElement.style.cursor = "pointer";
 
 		}
 

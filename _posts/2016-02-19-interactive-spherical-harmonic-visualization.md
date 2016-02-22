@@ -9,11 +9,17 @@ customjs:
     - threejs_trackballcontrols.js
     - sh/shpoly.js
     - sh/sh.js
+customstyles:
+    - sh/shtabs.css
+    - sh/sliders.css
 ---
 {% include JB/setup %}
 
 Here's an interactive demo that lets you visualize spherical harmonics approximations, 
-up to 5 bands.
+up to 5 bands. You can interactively slide the coefficients for the first three bands,
+while the other two bands can be set using the manual text entry button.
+
+Don't know what spherical harmonics are? Wait for the next post for a primer.
 
 <script id="SHShapeVertexShader" type="x-shader/x-vertex">
         uniform float sh[36];
@@ -105,8 +111,9 @@ up to 5 bands.
   </script>
   <script id="fragmentShader" type="x-shader/x-fragment">
         varying vec4 color;
+        uniform float exposure;
         void main() {
-            gl_FragColor = color;
+            gl_FragColor = color/exposure;
         }
   </script>
   <script id="LitFragmentShader" type="x-shader/x-fragment">
@@ -124,14 +131,71 @@ up to 5 bands.
             gl_FragColor = color*lv;
         }
   </script>
+<div id="modalshform" class="modal fade" role="dialog">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal">&times;</button>
+<h4 class="modal-title">Enter SH Coefficients</h4>
+</div>
+<div class="modal-body">
+<p>Enter spherical harmonic coefficients separated by whitespace or commas</p>
+<textarea class="form-control" rows="9" id="shcoeftextarea">
+</textarea>
+</div>
+<div class="modal-footer">
+<button type="submit" class="btn btn-default" data-dismiss="modal" onclick="submitSHCoefficients(document.getElementById('shcoeftextarea').value)">Submit</button>
+<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div>
+</div>
+
+</div>
+</div>
 <div style="display:table; width:100%">
     <div style="display:table-row">
         <div id="canvascontainer" style="display:table-cell;width:50%"></div>
-        <div id="controls" style="display:table-cell;width:50%"></div>
+        <div id="controls" style="display:table-cell;width:50%;padding:0px 5px">
+            <ul class="nav nav-tabs">
+                <li class="active"><a class="redth" data-toggle="tab" href="#rsh">Red Channel</a></li>
+                <li><a class="greenth" data-toggle="tab" href="#gsh">Green Channel</a></li>
+                <li><a class="blueth" data-toggle="tab" href="#bsh">Blue Channel</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div id="rsh" class="tab-pane fade in active">
+                {% include sh/sliderpage.html %}
+                </div>
+                <div id="gsh" class="tab-pane fade">
+                {% include sh/sliderpage.html %}
+                </div>
+                <div id="bsh" class="tab-pane fade">
+                {% include sh/sliderpage.html %}
+                </div>
+            </div>
+        </div>
     </div>
     <div style="display:table-row">
-        <div id="hdr" style="display:table-cell;width:50%"></div>
-        <div id="controls" style="display:table-cell;width:50%"></div>
+        <div id="hdr" style="padding:10px 5px;display:table-cell;width:50%">
+            <table width="100%">
+                <tr>
+                    <td>Exposure: </td>
+                    <td><input type="range" min="0.001" max="7" step="0.001" value="2" style="display:inline-block;width:100%" id="exposureslider" /></td>
+                </tr>
+            </table>
+        </div>
+        <div id="auxcontrols" style="padding:10px 5px;vertical-align:top;display:table-cell;width:50%">
+            <input type="button" class="btn btn-info btn-large" data-toggle="modal" data-target="#modalshform" value="Manually input SH coefficients" />
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            Monochrome: <input type="checkbox" id="monochrome" />
+            <br><br>
+            Display type:
+            <select class="form-control" id="shaderselect">
+                <option>Diffuse Shaded Sphere</option>
+                <option>Specular Shaded Sphere</option>
+                <option>Varying Radius</option>
+                <!--<option>Environment Cubemap</option>-->
+            </select>
+        </div>
     </div>
 </div>
 <script type="text/javascript">
@@ -154,7 +218,7 @@ var camera = new THREE.PerspectiveCamera(60, 1, 0.1, 1000);
 camera.position.z = 3;
 var renderer = new THREE.WebGLRenderer();
 renderer.setSize(w,w); // Square viewport
-renderer.setClearColor(0x114488,1);
+renderer.setClearColor(0x113377,1);
 
 var controls = new THREE.TrackballControls(camera, container);
 controls.rotateSpeed = 4.0;
@@ -164,11 +228,86 @@ controls.noPan = true;
 controls.staticMoving = true;
 controls.dynamicDampingFactor = 0.3;
 
-//populateControls(document.getElementById("controls"));
+var sh = SH(scene);
 init(scene);
 
 controls.addEventListener( 'change', render );
 container.appendChild(renderer.domElement);
+
+// Set up SH coefficient slider events
+var slidercontainers = Array(3);
+slidercontainers[0] = document.getElementById("rsh");
+slidercontainers[1] = document.getElementById("gsh");
+slidercontainers[2] = document.getElementById("bsh");
+var sliderarrays = Array(3);
+for (var i = 0; i < 3; i++) {
+    sliderarrays[i] = Array(9).fill(0);
+    sliderarrays[i][0] = 1;
+    updateSliderValues(slidercontainers[i], sliderarrays[i], -1);
+    var updatefn = (function(idx) {
+        return function() {
+            sh.updateChannelSHCoefs(sliderarrays[idx], idx);
+            if (sh.isMonochrome()) {
+                for (var j = 0; j < 3; j++) {
+                    if (j != idx) {
+                        updateSliderValues(slidercontainers[j], sliderarrays[idx], -1);
+                        sliderarrays[j] = sliderarrays[idx].slice(0);
+                    }
+                    sh.updateChannelSHCoefs(sliderarrays[j], j);
+                }
+            }
+            render();
+        };
+    })(i);
+    populateSliders(slidercontainers[i], sliderarrays[i], updatefn);
+}
+
+// Set up exposure slider events
+document.getElementById("exposureslider").oninput = function(e) {
+    var exposure = parseFloat(document.getElementById("exposureslider").value);
+    exposure = remap(exposure);
+    sh.updateExposure(exposure);
+    render();
+};
+
+// Set up material change
+document.getElementById("shaderselect").onchange = function(e) {
+    var mat = document.getElementById("shaderselect").selectedIndex;
+    if (mat == 2) {
+        $("#monochrome").prop("checked", true);
+        $("#monochrome").trigger("change");
+        $("#monochrome").attr("disabled", true);
+
+    } else {
+        $("#monochrome").attr("disabled", false);
+    }
+    sh.switchMaterial(mat);
+    render();
+};
+
+// Set up text entry of coefficients
+$("#modalshform").on("shown.bs.modal", function() { $("#shcoeftextarea").focus()});
+var submitSHCoefficients = function(s) {
+    var arr = $.trim(s).split(/,?\s+/).map(parseFloat);
+    for (var i = 0; i < 3; i++) {
+        updateSliderValues(slidercontainers[i], arr, i);
+        for (var j = 0; j < 9; j++) {
+            sliderarrays[i][j] = arr[3*j+i];
+        }
+        sh.updateChannelSHCoefs(sliderarrays[i], i);
+    }
+    render();
+};
+
+// Set up monochrome
+$("#monochrome").on("change", function(e) {
+    sh.setMonochrome(this.checked);
+    for (var j = 1; j < 3; j++) {
+        updateSliderValues(slidercontainers[j], sliderarrays[0], -1);
+        sliderarrays[j] = sliderarrays[0].slice(0);
+    }
+    render();
+});
 
 render();
 animate();
@@ -178,5 +317,5 @@ There are several different visualization modes:
 
 - The default view is a diffuse sphere lit by the spherical function as an environment map
 - Spherical function as an intensity image on a sphere (or, a specular sphere lit by the spherical function as an environment map)
-- Spherical function as the radius of a shape
-- Cubemap of the spherical function
+- Spherical function as the radius of a shape. This is the only mode that will let you see negative values, which are shown as green. Positive values are shown in red.
+- Cubemap of the spherical function (to be implemented)

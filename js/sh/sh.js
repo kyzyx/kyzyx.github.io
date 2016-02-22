@@ -1,106 +1,43 @@
 var NUM_SH_BANDS = 5;
+// Axes (with checkbox?)
+// Implement cubemap thing
 
-var SH = function(scene, controls) {
+var SH = function(scene) {
+    var specmaterial, diffusematerial, shapematerial;
+    var monochrome = false;
+    var currsh = Array(36*3).fill(0);
+    for (var i = 0; i < 3; i++) currsh[i] = 1;
 
-    var that = {
-        setSHCoefs: function() {
-        },
-    };
-    return that;
-};
+    var shcoef = getSHCoefficients();
+    var dshcoef = getDiffuseSHCoefficients();
+    var currexposure = 1.;
+    var exposurestruct = {type: "f", value: currexposure};
+    var currmat = 0;
+    var axes = new THREE.AxisHelper(2);
 
-var populateControls = function(controls) {
-};
+    var monosh = Array(36).fill(0);
+    monosh[0] = 1;
 
-var init = function(scene) {
-    var initialsh = Array(36*3).fill(0);
-    var RP2 = 1/(2*Math.sqrt(Math.PI));
-    var shcoef = Array(36);
-    // Band 0
-    shcoef[0] = 1;
-    // Band 1
-    shcoef[1] = -Math.sqrt(3);
-    shcoef[2] = Math.sqrt(3);
-    shcoef[3] = -Math.sqrt(3);
-    // Band 2
-    shcoef[4] = Math.sqrt(15);
-    shcoef[5] = -Math.sqrt(15);
-    shcoef[6] = Math.sqrt(5)/2;
-    shcoef[7] = -Math.sqrt(15);
-    shcoef[8] = Math.sqrt(15)/2;
-    // Band 3
-    shcoef[9] = -Math.sqrt(70)/4;
-    shcoef[10] = Math.sqrt(105);
-    shcoef[11] = -Math.sqrt(42)/4;
-    shcoef[12] = Math.sqrt(7)/2;
-    shcoef[13] = -Math.sqrt(42)/4;
-    shcoef[14] = Math.sqrt(105)/2;
-    shcoef[15] = -Math.sqrt(70)/4;
-    // Band 4
-    shcoef[16] = Math.sqrt(35)*1.5;
-    shcoef[17] = -Math.sqrt(70)*0.75;
-    shcoef[18] = Math.sqrt(5)*1.5;
-    shcoef[19] = -Math.sqrt(10)*0.75;
-    shcoef[20] = 0.375;
-    shcoef[21] = -Math.sqrt(10)*0.75;
-    shcoef[22] = Math.sqrt(5)*0.75;
-    shcoef[23] = -Math.sqrt(70)*0.75;
-    shcoef[24] = Math.sqrt(35)*0.375;
-    for (var i = 0; i < shcoef.length; i++) shcoef[i] *= RP2;
-
-    var dshcoef = shcoef.slice(0);
-    // Band 0
-    dshcoef[0] *= Math.PI;
-    // Band 1
-    dshcoef[1] *= 2*Math.PI/3;
-    dshcoef[2] *= 2*Math.PI/3;
-    dshcoef[3] *= 2*Math.PI/3;
-    // Band 2
-    dshcoef[4] *= Math.PI/4;
-    dshcoef[5] *= Math.PI/4;
-    dshcoef[6] *= Math.PI/4;
-    dshcoef[7] *= Math.PI/4;
-    dshcoef[8] *= Math.PI/4;
-    // Band 3
-    dshcoef[9] = 0;
-    dshcoef[10] = 0;
-    dshcoef[11] = 0;
-    dshcoef[12] = 0;
-    dshcoef[13] = 0;
-    dshcoef[14] = 0;
-    dshcoef[15] = 0;
-    // Band 4
-    dshcoef[16] *= -Math.PI/24;
-    dshcoef[17] *= -Math.PI/24;
-    dshcoef[18] *= -Math.PI/24;
-    dshcoef[19] *= -Math.PI/24;
-    dshcoef[20] *= -Math.PI/24;
-    dshcoef[21] *= -Math.PI/24;
-    dshcoef[22] *= -Math.PI/24;
-    dshcoef[23] *= -Math.PI/24;
-    dshcoef[24] *= -Math.PI/24;
-
-    for (var i = 0; i < 3*6; i++) initialsh[i] = 0.5;
+    var shapes = Array(3);
     var geometry = new THREE.SphereGeometry(1, 64, 64);
     var specmaterial = new THREE.ShaderMaterial({
             uniforms: {
-                sh: {type: "fv", value: initialsh },
-                shc: {type: "fv1", value: shcoef }
+                sh: {type: "fv", value: currsh },
+                shc: {type: "fv1", value: shcoef },
+                exposure: exposurestruct
             },
         vertexShader: document.getElementById("SHVertexShader").textContent,
         fragmentShader: document.getElementById("fragmentShader").textContent
         });
     var diffusematerial = new THREE.ShaderMaterial({
             uniforms: {
-                sh: {type: "fv", value: initialsh },
-                shc: {type: "fv1", value: dshcoef }
+                sh: {type: "fv", value: currsh },
+                shc: {type: "fv1", value: dshcoef },
+                exposure: exposurestruct
             },
         vertexShader: document.getElementById("SHVertexShader").textContent,
         fragmentShader: document.getElementById("fragmentShader").textContent
         });
-    var monosh = Array(36).fill(0);
-    monosh[0] = 1;
-    monosh[1] = 1;
     var shapematerial = new THREE.ShaderMaterial({
             uniforms: {
                 sh: {type: "fv1", value: monosh },
@@ -109,6 +46,108 @@ var init = function(scene) {
         vertexShader: document.getElementById("SHShapeVertexShader").textContent,
         fragmentShader: document.getElementById("LitFragmentShader").textContent
         });
-    var sph = new THREE.Mesh(geometry, shapematerial);
-    scene.add(sph);
+
+    shapes[0] = new THREE.Mesh(geometry, diffusematerial); 
+    shapes[1] = new THREE.Mesh(geometry, specmaterial); 
+    shapes[2] = new THREE.Mesh(geometry, shapematerial); 
+    scene.add(shapes[currmat]);
+    scene.add(axes);
+
+    var update = function() {
+        specmaterial.sh = currsh;
+        exposurestruct.value = currexposure;
+        diffusematerial.sh = currsh;
+        exposurestruct.value = currexposure;
+        for (var i = 0; i < currsh.length; i+=3) monosh[i/3] = currsh[i];
+        shapematerial.sh = monosh;
+    };
+    var that = {
+        updateSHCoefs: function(coefs) {
+            for (var i = 0; i < coefs.length; i++) currsh[i] = coefs[i];
+            update();
+        },
+        updateChannelSHCoefs: function(coefs, ch) {
+            for (var i = 0; i < coefs.length; i++) currsh[3*i+ch] = coefs[i];
+            update();
+        },
+        switchMaterial: function(material) {
+            scene.remove(shapes[currmat]);
+            currmat = material;
+            scene.add(shapes[currmat]);
+        },
+        updateExposure: function(e) {
+            currexposure = e;
+            update();
+        },
+        setMonochrome: function(mono) {
+            monochrome = mono;
+            if (monochrome) {
+                for (var i = 0; i < currsh.length; i+= 3) {
+                    currsh[i+1] = currsh[i];
+                    currsh[i+2] = currsh[i];
+                }
+                update();
+            }
+        },
+        isMonochrome: function() {
+            return monochrome;
+        }
+    };
+    return that;
+};
+
+var init = function(scene) {
+};
+
+var remap = function(s) {
+    var f = parseFloat(s);
+    var fv = Math.abs(f);
+    if (fv >= 1) fv = Math.pow(2, fv-1);
+    if (f < 0) fv = -fv;
+    return fv;
+};
+var iremap = function(v) {
+    var fv = Math.abs(v);
+    if (fv >= 1) fv = Math.log(fv)/Math.log(2) + 1;
+    if (v < 0) fv = -fv;
+    return fv;
+};
+var populateSliders = function(el, arr, updatefn) {
+    var rows = el.getElementsByTagName("tr");
+    var z = 0;
+    for (var i = 0; i < rows.length; i++) {
+        var l = parseInt(rows[i].getAttribute("shl"));
+        var m = parseInt(rows[i].getAttribute("shm"));
+        var sliderel = rows[i].getElementsByTagName("input")[0];
+        var textel = rows[i].getElementsByClassName("slidervalue")[0];
+        sliderel.oninput = (function(sel, tel) {
+            var fn = (function(idx) {
+                return function(v) {
+                    arr[idx] = v;
+                    updatefn();
+                }})(z++);
+            return function(e) {
+                var v = remap(sel.value);
+                fn(v);
+                tel.innerHTML = v.toFixed(3);
+            };
+        })(sliderel, textel);
+
+    }
+};
+var updateSliderValues = function(el, arr, ch) {
+    var rows = el.getElementsByTagName("tr");
+    var z = 0;
+    for (var i = 0; i < rows.length; i++) {
+        var l = parseInt(rows[i].getAttribute("shl"));
+        var m = parseInt(rows[i].getAttribute("shm"));
+        var idx = l*l+m+l;
+        if (ch >= 0) idx = 3*idx + ch;
+
+        var sliderel = rows[i].getElementsByTagName("input")[0];
+        var textel = rows[i].getElementsByClassName("slidervalue")[0];
+
+        sliderel.value = iremap(arr[idx]);
+        textel.innerHTML = arr[idx].toFixed(3);
+    }
 };

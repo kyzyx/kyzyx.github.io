@@ -1,0 +1,21 @@
+{% assign indices = "0|1|2" | split: "|" %}
+{% assign negindices = "-2|-1|0|1|2" | split: "|" %}
+{% for ll in indices %}
+<h4> Band {{ ll }} </h4>
+<table class="slidertable">
+{% for mm in negindices %}
+{% assign l = ll | plus:0 %}
+{% assign m = mm | plus:0 %}
+    {% if m <= l %}
+        {% assign negm = m | times: -1 %}
+        {% if negm <= l %}
+        <tr shl="{{ l }}" shm="{{ m }}">
+                    <td>l = {{ l }}, m = {{ m }}</td>
+                    <td><input style="display:inline" type="range" min="-7" max="7" step="0.002" /></td>
+                    <td class="slidervalue">0.000</td>
+            </tr>
+        {% endif %}
+    {% endif %}
+{% endfor %}
+</table>
+{% endfor %}

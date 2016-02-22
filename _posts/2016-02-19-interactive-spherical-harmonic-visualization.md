@@ -15,7 +15,7 @@ customstyles:
 ---
 {% include JB/setup %}
 
-Here's an interactive demo that lets you visualize spherical harmonics approximations, 
+Here's an interactive demo that lets you visualize spherical harmonic approximations, 
 up to 5 bands. You can interactively slide the coefficients for the first three bands,
 while the other two bands can be set using the manual text entry button.
 
@@ -151,10 +151,13 @@ Don't know what spherical harmonics are? Wait for the next post for a primer.
 
 </div>
 </div>
-<div style="display:table; width:100%">
-    <div style="display:table-row">
-        <div id="canvascontainer" style="display:table-cell;width:50%"></div>
-        <div id="controls" style="display:table-cell;width:50%;padding:0px 5px">
+<table style="width:100%">
+    <tr>
+        <td>
+        <div id="canvascontainer" style="display:block"></div>
+        </td>
+        <td>
+        <div id="controls" style="padding:0px 5px">
             <ul class="nav nav-tabs">
                 <li class="active"><a class="redth" data-toggle="tab" href="#rsh">Red Channel</a></li>
                 <li><a class="greenth" data-toggle="tab" href="#gsh">Green Channel</a></li>
@@ -173,17 +176,18 @@ Don't know what spherical harmonics are? Wait for the next post for a primer.
                 </div>
             </div>
         </div>
-    </div>
-    <div style="display:table-row">
-        <div id="hdr" style="padding:10px 5px;display:table-cell;width:50%">
+        </td>
+    </tr>
+    <tr>
+        <td style="padding:10px 5px;vertical-align:top">
             <table width="100%">
                 <tr>
                     <td>Exposure: </td>
                     <td><input type="range" min="0.001" max="7" step="0.001" value="2" style="display:inline-block;width:100%" id="exposureslider" /></td>
                 </tr>
             </table>
-        </div>
-        <div id="auxcontrols" style="padding:10px 5px;vertical-align:top;display:table-cell;width:50%">
+        </td>
+        <td style="padding:10px 5px;width:50%;vertical-align:top">
             <input type="button" class="btn btn-info btn-large" data-toggle="modal" data-target="#modalshform" value="Manually input SH coefficients" />
             &nbsp;&nbsp;&nbsp;&nbsp;
             Monochrome: <input type="checkbox" id="monochrome" />
@@ -195,9 +199,9 @@ Don't know what spherical harmonics are? Wait for the next post for a primer.
                 <option>Varying Radius</option>
                 <!--<option>Environment Cubemap</option>-->
             </select>
-        </div>
-    </div>
-</div>
+        </td>
+    </tr>
+</table>
 <script type="text/javascript">
 var animate = function () {
     requestAnimationFrame(animate);

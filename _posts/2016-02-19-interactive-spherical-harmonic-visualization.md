@@ -3,7 +3,7 @@ layout: post
 title: "Interactive Spherical Harmonic Visualization"
 description: ""
 category: 
-tags: [technical, interactive]
+tags: [interactive]
 customjs:
     - https://cdnjs.cloudflare.com/ajax/libs/three.js/r74/three.min.js
     - threejs_trackballcontrols.js

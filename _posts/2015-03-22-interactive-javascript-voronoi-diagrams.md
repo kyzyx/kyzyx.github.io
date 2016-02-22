@@ -3,7 +3,7 @@ layout: post
 title: "Interactive Javascript Voronoi Diagrams"
 description: ""
 category: "projects"
-tags: []
+tags: [interactive]
 customjs:
     - https://cdn.rawgit.com/google/closure-library/master/closure/goog/base.js
     - voronoi/geometry.js

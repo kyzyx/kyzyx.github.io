@@ -3,7 +3,7 @@ layout: post
 title: "Pagerank Visualization"
 description: ""
 category: "projects"
-tags: []
+tags: [interactive]
 customjs:
     - http://d3js.org/d3.v3.min.js
     - prvis/colorbrewer.js

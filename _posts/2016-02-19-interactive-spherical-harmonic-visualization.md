@@ -255,7 +255,9 @@ for (var i = 0; i < 3; i++) {
                 for (var j = 0; j < 3; j++) {
                     if (j != idx) {
                         updateSliderValues(slidercontainers[j], sliderarrays[idx], -1);
-                        sliderarrays[j] = sliderarrays[idx].slice(0);
+                        for (var k = 0; k < sliderarrays[idx].length; k++) {
+                            sliderarrays[j][k] = sliderarrays[idx][k];
+                        }
                     }
                     sh.updateChannelSHCoefs(sliderarrays[j], j);
                 }
@@ -284,6 +286,7 @@ document.getElementById("shaderselect").onchange = function(e) {
 
     } else {
         $("#monochrome").attr("disabled", false);
+        $("#monochrome").trigger("change");
     }
     sh.switchMaterial(mat);
     render();
@@ -293,6 +296,7 @@ document.getElementById("shaderselect").onchange = function(e) {
 $("#modalshform").on("shown.bs.modal", function() { $("#shcoeftextarea").focus()});
 var submitSHCoefficients = function(s) {
     var arr = $.trim(s).split(/,?\s+/).map(parseFloat);
+    arr = arr.concat(Array(36*3 - arr.length).fill(0));
     for (var i = 0; i < 3; i++) {
         updateSliderValues(slidercontainers[i], arr, i);
         for (var j = 0; j < 9; j++) {
@@ -308,7 +312,9 @@ $("#monochrome").on("change", function(e) {
     sh.setMonochrome(this.checked);
     for (var j = 1; j < 3; j++) {
         updateSliderValues(slidercontainers[j], sliderarrays[0], -1);
-        sliderarrays[j] = sliderarrays[0].slice(0);
+        for (var k = 0; k < sliderarrays[j].length; k++) {
+            sliderarrays[j][k] = sliderarrays[0][k];
+        }
     }
     render();
 });

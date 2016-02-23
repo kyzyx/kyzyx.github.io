@@ -72,7 +72,7 @@ Don't know what spherical harmonics are? Wait for the next post for a primer.
         varying vec4 color;
         void main() {
             gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
-            vec3 p = position;
+            vec3 p = -position;
             float x2 = p.x*p.x;
             float y2 = p.y*p.y;
             float z2 = p.z*p.z;
@@ -372,6 +372,6 @@ animate();
 There are several different visualization modes:
 
 - The default view is a diffuse sphere lit by the spherical function as an environment map
-- Spherical function as an intensity image on a sphere (or, a specular sphere lit by the spherical function as an environment map)
+- A specular sphere lit by the spherical function as an environment map (which is the same as rendering the spherical function as the intensity on a sphere, with axes reversed)
 - Spherical function as the radius of a shape. This is the only mode that will let you see negative values, which are shown as green. Positive values are shown in red.
 - Cubemap of the spherical function (to be implemented)

@@ -457,6 +457,7 @@ THREE.TrackballControls = function ( object, domElement ) {
 	function mousewheel( event ) {
 
 		if ( _this.enabled === false ) return;
+        event.preventDefault();
 
 		var delta = 0;
 
@@ -477,6 +478,7 @@ THREE.TrackballControls = function ( object, domElement ) {
 		_zoomStart.y += delta * 0.01;
 		_this.dispatchEvent( startEvent );
 		_this.dispatchEvent( endEvent );
+        return false;
 
 	}
 

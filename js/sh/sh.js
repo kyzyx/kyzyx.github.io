@@ -14,6 +14,7 @@ var SH = function(scene) {
     var exposurestruct = {type: "f", value: currexposure};
     var currmat = 0;
     var axes = new THREE.AxisHelper(2);
+    var updatelisteners = [];
 
     var monosh = Array(36).fill(0);
     monosh[0] = 1;
@@ -60,6 +61,9 @@ var SH = function(scene) {
         exposurestruct.value = currexposure;
         for (var i = 0; i < currsh.length; i+=3) monosh[i/3] = currsh[i];
         shapematerial.sh = monosh;
+        for (var i = 0; i < updatelisteners.length; i++) {
+            updatelisteners[i](currsh, currexposure, currmat);
+        }
     };
     var that = {
         updateSHCoefs: function(coefs) {
@@ -91,7 +95,17 @@ var SH = function(scene) {
         },
         isMonochrome: function() {
             return monochrome;
+        },
+        getAsURLQueryParams: function() {
+            var ret = "sh=" + currsh.join();
+            ret += "&exposure=" + currexposure;
+            if (currmat > 0) ret += "&viewtype=" + currmat;
+            return ret;
+        },
+        onUpdate: function(f) {
+            updatelisteners.push(f);
         }
+
     };
     return that;
 };

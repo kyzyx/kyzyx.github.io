@@ -188,15 +188,28 @@ Don't know what spherical harmonics are? Wait for the next post for a primer.
             </table>
         </td>
         <td style="padding:10px 5px;width:50%;vertical-align:top">
-            <input type="button" class="btn btn-info btn-large" data-toggle="modal" data-target="#modalshform" value="Manually input SH coefficients" />
+            <input type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modalshform" value="Manually input SH coefficients" />
             &nbsp;&nbsp;&nbsp;&nbsp;
             Monochrome: <input type="checkbox" id="monochrome" />
-            <br><br>
-            Display type:
+        </td>
+    </tr>
+    <tr>
+        <td style="padding:10px 5px">
+            <table width="100%">
+                <tr>
+                <td>
+                    <input type="button" class="btn btn-info btn-sm" value="Copy URL to Clipboard" onclick="$('#urltextbox').select(); document.execCommand('copy');" />
+                </td><td>
+                    <input style="display:inline;width:100%" id="urltextbox" onclick="this.select()" />
+                </td>
+                </tr>
+            </table>
+        </td>
+        <td style="padding:10px 5px">
             <select class="form-control" id="shaderselect">
-                <option>Diffuse Shaded Sphere</option>
-                <option>Specular Shaded Sphere</option>
-                <option>Varying Radius</option>
+                <option>Display Type: Diffuse Shaded Sphere</option>
+                <option>Display Type: Specular Shaded Sphere</option>
+                <option>Display Type: Varying Radius</option>
                 <!--<option>Environment Cubemap</option>-->
             </select>
         </td>
@@ -234,6 +247,10 @@ controls.dynamicDampingFactor = 0.3;
 
 var sh = SH(scene);
 init(scene);
+sh.onUpdate(function() {
+    var path = [location.protocol, '//', location.host, location.pathname].join('');
+    $("#urltextbox").val(path + "?" + sh.getAsURLQueryParams());
+});
 
 controls.addEventListener( 'change', render );
 container.appendChild(renderer.domElement);
@@ -277,8 +294,7 @@ document.getElementById("exposureslider").oninput = function(e) {
 };
 
 // Set up material change
-document.getElementById("shaderselect").onchange = function(e) {
-    var mat = document.getElementById("shaderselect").selectedIndex;
+var switchMaterial = function(mat) {
     if (mat == 2) {
         $("#monochrome").prop("checked", true);
         $("#monochrome").trigger("change");
@@ -290,6 +306,10 @@ document.getElementById("shaderselect").onchange = function(e) {
     }
     sh.switchMaterial(mat);
     render();
+};
+document.getElementById("shaderselect").onchange = function(e) {
+    var mat = document.getElementById("shaderselect").selectedIndex;
+    switchMaterial(mat);
 };
 
 // Set up text entry of coefficients
@@ -318,6 +338,32 @@ $("#monochrome").on("change", function(e) {
     }
     render();
 });
+
+// Get params from url
+var initial = 0;
+var expo = 1;
+var viewtype = 0;
+location.search.substr(1).split("&").forEach(function (item) {
+    var tmp = item.split("=");
+    if (tmp[0] === "sh") initial = decodeURIComponent(tmp[1]).split(",").map(parseFloat);
+    else if (tmp[0] === "exposure") expo = parseFloat(decodeURIComponent(tmp[1]));
+    else if (tmp[0] === "viewtype") viewtype = decodeURIComponent(tmp[1]);
+});
+if (viewtype == "specular" || viewtype == "environment" || viewtype == "1") {
+    sh.switchMaterial(1);
+    $("#shaderselect option").eq(1).prop('selected', true);
+} else if (viewtype == "radius" || viewtype == "2") {
+    sh.switchMaterial(2);
+    $("#shaderselect option").eq(2).prop('selected', true);
+}
+$("#exposureslider").val(iremap(expo));
+sh.updateExposure(expo);
+if (initial.length > 0) {
+    sh.updateSHCoefs(initial);
+    for (var i = 0; i < 3; i++) {
+        updateSliderValues(slidercontainers[i], initial, i);
+    }
+}
 
 render();
 animate();

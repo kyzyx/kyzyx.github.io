@@ -112,8 +112,9 @@ Don't know what spherical harmonics are? Wait for the next post for a primer.
   <script id="fragmentShader" type="x-shader/x-fragment">
         varying vec4 color;
         uniform float exposure;
+        uniform float gamma;
         void main() {
-            gl_FragColor = color/exposure;
+            gl_FragColor = pow(color/exposure,vec4(gamma, gamma, gamma,1));
         }
   </script>
   <script id="LitFragmentShader" type="x-shader/x-fragment">
@@ -184,6 +185,10 @@ Don't know what spherical harmonics are? Wait for the next post for a primer.
                 <tr>
                     <td>Exposure: </td>
                     <td><input type="range" min="0.001" max="7" step="0.001" value="2" style="display:inline-block;width:100%" id="exposureslider" /></td>
+                </tr>
+                <tr>
+                    <td>Gamma transform: </td>
+                    <td><input type="checkbox" id="gamma" /></td>
                 </tr>
             </table>
         </td>
@@ -331,6 +336,11 @@ $("#monochrome").on("change", function(e) {
     }
     render();
 });
+$("#gamma").on("change", function(e) {
+    sh.setGamma(this.checked?1./2.2:1);
+    updateurl();
+    render();
+});
 
 // Get params from url
 var initial = 0;
@@ -338,11 +348,13 @@ var expo = 1;
 var viewtype = 0;
 var camparams = [];
 var camdist = 3;
+var gamma = 1;
 location.search.substr(1).split("&").forEach(function (item) {
     var tmp = item.split("=");
     if (tmp[0] === "sh") initial = decodeURIComponent(tmp[1]).split(",").map(parseFloat);
     else if (tmp[0] === "exposure") expo = parseFloat(decodeURIComponent(tmp[1]));
     else if (tmp[0] === "viewtype") viewtype = decodeURIComponent(tmp[1]);
+    else if (tmp[0] == "gamma") gamma = parseFloat(tmp[1]);
     else if (tmp[0] === "quaternion") {
         camparams = decodeURIComponent(tmp[1]).split(",").map(parseFloat);
         if (camparams.length > 4) camdist = camparams[4];
@@ -373,6 +385,10 @@ if (viewtype == "specular" || viewtype == "environment" || viewtype == "1") {
 } else if (viewtype == "radius" || viewtype == "2") {
     sh.switchMaterial(2);
     $("#shaderselect option").eq(2).prop('selected', true);
+}
+if (gamma != 1) {
+    sh.setGamma(gamma);
+    $("#gamma").prop("checked", true);
 }
 $("#exposureslider").val(iremap(expo));
 sh.updateExposure(expo);

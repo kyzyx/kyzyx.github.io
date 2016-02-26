@@ -4,6 +4,7 @@ var NUM_SH_BANDS = 5;
 
 var SH = function(scene) {
     var specmaterial, diffusematerial, shapematerial;
+    var gamma = 1;
     var monochrome = false;
     var currsh = Array(25*3).fill(0);
     for (var i = 0; i < 3; i++) currsh[i] = 1;
@@ -12,6 +13,7 @@ var SH = function(scene) {
     var dshcoef = getDiffuseSHCoefficients();
     var currexposure = 1.;
     var exposurestruct = {type: "f", value: currexposure};
+    var gammastruct = {type: "f", value: gamma};
     var currmat = 0;
     var axes = new THREE.AxisHelper(2);
     var updatelisteners = [];
@@ -25,7 +27,8 @@ var SH = function(scene) {
             uniforms: {
                 sh: {type: "fv", value: currsh },
                 shc: {type: "fv1", value: shcoef },
-                exposure: exposurestruct
+                exposure: exposurestruct,
+                gamma: gammastruct,
             },
         vertexShader: document.getElementById("SHVertexShader").textContent,
         fragmentShader: document.getElementById("fragmentShader").textContent
@@ -34,7 +37,8 @@ var SH = function(scene) {
             uniforms: {
                 sh: {type: "fv", value: currsh },
                 shc: {type: "fv1", value: dshcoef },
-                exposure: exposurestruct
+                exposure: exposurestruct,
+                gamma: gammastruct,
             },
         vertexShader: document.getElementById("SHVertexShader").textContent,
         fragmentShader: document.getElementById("fragmentShader").textContent
@@ -59,6 +63,7 @@ var SH = function(scene) {
         exposurestruct.value = currexposure;
         diffusematerial.sh = currsh;
         exposurestruct.value = currexposure;
+        gammastruct.value = gamma;
         for (var i = 0; i < currsh.length; i+=3) monosh[i/3] = currsh[i];
         shapematerial.sh = monosh;
         for (var i = 0; i < updatelisteners.length; i++) {
@@ -93,6 +98,10 @@ var SH = function(scene) {
                 update();
             }
         },
+        setGamma: function(g) {
+            gamma = g;
+            update();
+        },
         isMonochrome: function() {
             return monochrome;
         },
@@ -100,11 +109,12 @@ var SH = function(scene) {
             var ret = "sh=" + currsh.join();
             ret += "&exposure=" + currexposure;
             if (currmat > 0) ret += "&viewtype=" + currmat;
+            if (gamma != 1) ret += "&gamma=" + gamma;
             return ret;
         },
         onUpdate: function(f) {
             updatelisteners.push(f);
-        }
+        },
 
     };
     return that;

@@ -22,8 +22,8 @@ while the other two bands can be set using the manual text entry button.
 Don't know what spherical harmonics are? Wait for the next post for a primer.
 
 <script id="SHShapeVertexShader" type="x-shader/x-vertex">
-        uniform float sh[36];
-        uniform float shc[36];
+        uniform float sh[25];
+        uniform float shc[25];
         varying vec4 color;
         varying vec3 vnormal;
         void main() {
@@ -67,8 +67,8 @@ Don't know what spherical harmonics are? Wait for the next post for a primer.
         }
   </script>
   <script id="SHVertexShader" type="x-shader/x-vertex">
-        uniform vec3 sh[36];
-        uniform float shc[36];
+        uniform vec3 sh[25];
+        uniform float shc[25];
         varying vec4 color;
         void main() {
             gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
@@ -309,7 +309,7 @@ document.getElementById("shaderselect").onchange = function(e) {
 $("#modalshform").on("shown.bs.modal", function() { $("#shcoeftextarea").focus()});
 var submitSHCoefficients = function(s) {
     var arr = $.trim(s).split(/,?\s+/).map(parseFloat);
-    arr = arr.concat(Array(36*3 - arr.length).fill(0));
+    arr = arr.concat(Array(25*3 - arr.length).fill(0));
     for (var i = 0; i < 3; i++) {
         updateSliderValues(slidercontainers[i], arr, i);
         for (var j = 0; j < 9; j++) {

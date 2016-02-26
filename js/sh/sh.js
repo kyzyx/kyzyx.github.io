@@ -5,7 +5,7 @@ var NUM_SH_BANDS = 5;
 var SH = function(scene) {
     var specmaterial, diffusematerial, shapematerial;
     var monochrome = false;
-    var currsh = Array(36*3).fill(0);
+    var currsh = Array(25*3).fill(0);
     for (var i = 0; i < 3; i++) currsh[i] = 1;
 
     var shcoef = getSHCoefficients();
@@ -16,7 +16,7 @@ var SH = function(scene) {
     var axes = new THREE.AxisHelper(2);
     var updatelisteners = [];
 
-    var monosh = Array(36).fill(0);
+    var monosh = Array(25).fill(0);
     monosh[0] = 1;
 
     var shapes = Array(3);

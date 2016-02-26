@@ -232,27 +232,20 @@ var h = container.offsetHeight;
 
 var scene = new THREE.Scene(); 
 var camera = new THREE.PerspectiveCamera(60, 1, 0.1, 1000); 
-camera.position.z = 3;
 var renderer = new THREE.WebGLRenderer();
 renderer.setSize(w,w); // Square viewport
 renderer.setClearColor(0x113377,1);
 
-var controls = new THREE.TrackballControls(camera, container);
-controls.rotateSpeed = 4.0;
-controls.zoomSpeed = 1.2;
-controls.noZoom = false;
-controls.noPan = true;
-controls.staticMoving = true;
-controls.dynamicDampingFactor = 0.3;
-
 var sh = SH(scene);
 init(scene);
-sh.onUpdate(function() {
+var updateurl = function() {
     var path = [location.protocol, '//', location.host, location.pathname].join('');
-    $("#urltextbox").val(path + "?" + sh.getAsURLQueryParams());
-});
+    var d = camera.position.length();
+    var camparams = [camera.quaternion.x, camera.quaternion.y, camera.quaternion.z, camera.quaternion.w, d].join();
+    $("#urltextbox").val(path + "?" + sh.getAsURLQueryParams() + "&quaternion=" + camparams);
+};
+sh.onUpdate(updateurl);
 
-controls.addEventListener( 'change', render );
 container.appendChild(renderer.domElement);
 
 // Set up SH coefficient slider events
@@ -343,12 +336,37 @@ $("#monochrome").on("change", function(e) {
 var initial = 0;
 var expo = 1;
 var viewtype = 0;
+var camparams = [];
+var camdist = 3;
 location.search.substr(1).split("&").forEach(function (item) {
     var tmp = item.split("=");
     if (tmp[0] === "sh") initial = decodeURIComponent(tmp[1]).split(",").map(parseFloat);
     else if (tmp[0] === "exposure") expo = parseFloat(decodeURIComponent(tmp[1]));
     else if (tmp[0] === "viewtype") viewtype = decodeURIComponent(tmp[1]);
+    else if (tmp[0] === "quaternion") {
+        camparams = decodeURIComponent(tmp[1]).split(",").map(parseFloat);
+        if (camparams.length > 4) camdist = camparams[4];
+    }
 });
+if (camparams.length > 0) {
+    camera.quaternion.set(camparams[0], camparams[1], camparams[2], camparams[3]);
+    var newpos = ((new THREE.Vector3(0,0,camdist)).applyQuaternion(camera.quaternion));
+    camera.position.set(newpos.x, newpos.y, newpos.z);
+    var newup = ((new THREE.Vector3(0,1,0)).applyQuaternion(camera.quaternion));
+    camera.up.set(newup.x, newup.y, newup.z);
+} else {
+    camera.position.z = 3;
+}
+var controls = new THREE.TrackballControls(camera, container);
+controls.rotateSpeed = 4.0;
+controls.zoomSpeed = 1.2;
+controls.noZoom = false;
+controls.noPan = true;
+controls.staticMoving = true;
+controls.dynamicDampingFactor = 0.3;
+controls.addEventListener('change', render);
+controls.addEventListener('change', updateurl);
+
 if (viewtype == "specular" || viewtype == "environment" || viewtype == "1") {
     sh.switchMaterial(1);
     $("#shaderselect option").eq(1).prop('selected', true);

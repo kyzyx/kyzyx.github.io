@@ -315,7 +315,7 @@ var submitSHCoefficients = function(s) {
         for (var j = 0; j < 9; j++) {
             sliderarrays[i][j] = arr[3*j+i];
         }
-        sh.updateChannelSHCoefs(sliderarrays[i], i);
+        sh.updateSHCoefs(arr);
     }
     render();
 };

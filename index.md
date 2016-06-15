@@ -1,6 +1,8 @@
 ---
 layout: page
 title: Edward Zhang
+customjs:
+    - redirect.js
 (*tagline: Supporting tagline*)
 ---
 {% include JB/setup %}

@@ -62,7 +62,7 @@ Don't know what spherical harmonics are? Wait for the next post for a primer.
                 sh[23]*shc[23]*p.x*p.z*(x2-3.*y2) +
                 sh[24]*shc[24]*(x2*x2 - 6.*x2*y2 + y2*y2);
             gl_Position = projectionMatrix * modelViewMatrix * vec4( abs(r)*p, 1.0 );
-            color = r>0.?vec4(1,0,0,1):vec4(0,1,0,1);
+            color = r>0.?vec4(0,1,0,1):vec4(1,0,0,1);
             vnormal = normal;
         }
   </script>
@@ -76,7 +76,7 @@ Don't know what spherical harmonics are? Wait for the next post for a primer.
             float x2 = p.x*p.x;
             float y2 = p.y*p.y;
             float z2 = p.z*p.z;
-            color = vec4((
+            vec3 v =
             sh[0]*shc[0] +
 
             sh[1]*shc[1]*p.y +
@@ -105,8 +105,8 @@ Don't know what spherical harmonics are? Wait for the next post for a primer.
             sh[21]*shc[21]*p.x*p.z*(7.*z2-3.) +
             sh[22]*shc[22]*(x2-y2)*(7.*z2-1.) +
             sh[23]*shc[23]*p.x*p.z*(x2-3.*y2) +
-            sh[24]*shc[24]*(x2*x2 - 6.*x2*y2 + y2*y2)
-            ), 1);
+            sh[24]*shc[24]*(x2*x2 - 6.*x2*y2 + y2*y2);
+            color = clamp(vec4(v,1), vec4(0), vec4(1e6));
         }
   </script>
   <script id="fragmentShader" type="x-shader/x-fragment">
@@ -393,6 +393,9 @@ if (gamma != 1) {
 $("#exposureslider").val(iremap(expo));
 sh.updateExposure(expo);
 if (initial.length > 0) {
+    for (var i = initial.length; i < 3*25; i++) {
+        initial.push(0);
+    }
     sh.updateSHCoefs(initial);
     for (var i = 0; i < 3; i++) {
         updateSliderValues(slidercontainers[i], initial, i);
@@ -407,5 +410,5 @@ There are several different visualization modes:
 
 - The default view is a diffuse sphere lit by the spherical function as an environment map
 - A specular sphere lit by the spherical function as an environment map (which is the same as rendering the spherical function as the intensity on a sphere, with axes reversed)
-- Spherical function as the radius of a shape. This is the only mode that will let you see negative values, which are shown as green. Positive values are shown in red.
+- Spherical function as the radius of a shape. This is the only mode that will let you see negative values, which are shown as red. Positive values are shown in green.
 - Cubemap of the spherical function (to be implemented)

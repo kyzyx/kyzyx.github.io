@@ -216,16 +216,21 @@ We can also use linear bases for interpolation: if we only had a sparse sampling
 
 In both of these cases, we want to use a sampling of function values, and *project* the function into the linear basis. The most general way to do this is, unsurprisingly, [linear least squares](https://en.wikipedia.org/wiki/Linear_least_squares). Given a list of $$m$$ observations $$(x_j, f(x_j))$$, you can form the equations
 
-$$ f(x_1) = c_1b_1(x_1) + c_2b_2(x_1) + ... + c_nb_n(x_1) $$
+$$ f(x_1) \approx \hat{f}(x_1) = c_1b_1(x_1) + c_2b_2(x_1) + ... + c_nb_n(x_1) = \sum_i c_ib_i(x_1)$$
 <br>
-$$ f(x_2) = c_1b_1(x_2) + c_2b_2(x_2) + ... + c_nb_n(x_2) $$
+$$ f(x_2) \approx \hat{f}(x_2) = c_1b_1(x_2) + c_2b_2(x_2) + ... + c_nb_n(x_2) = \sum_i c_ib_i(x_2)$$
 <br>
 $$ ... $$
 <br>
-$$ f(x_m) = c_1b_1(x_m) + c_2b_2(x_m) + ... + c_nb_n(x_m) $$
+$$ f(x_m) \approx \hat{f}(x_m) = c_1b_1(x_m) + c_2b_2(x_m) + ... + c_nb_n(x_m) = \sum_i c_ib_i(x_m)$$
 
-Then just plug in your values for $$f(x_j)$$ and evaluate the $$b_i(x_j)$$
-(since you know your basis functions), and then your only unknowns are the $$c_i$$.
+You then want to minimize the squared differences between your observed values $$f(x_j)$$ and your
+fitted values $$\hat{f}(x_j)$$.
+
+$$ \min_{c_i} \sum_j \left( f(x_j) - \sum_i c_ib_i(x_j)\right)^2$$
+
+You can just plug in your values for $$f(x_j)$$ and evaluate the $$b_i(x_j)$$
+(since you know your basis functions), so that your only unknowns are the $$c_i$$.
 
 Sample code for using linear least squares for function approximation (including code used to generate the above images) is available at [https://github.com/kyzyx/linearbasis](https://github.com/kyzyx/linearbasis). Note that, while linear least squares will work for projecting into any linear basis, it is not always the most effective way to do so. For example, when using the harmonic bases, you usually want to use a Fourier transform instead; various types of wavelet transforms also exist for different types of wavelet bases.
 

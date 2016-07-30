@@ -11,7 +11,6 @@ var SITE = 1;
 var ARC  = 2;
 
 Voronoi = function(points) {
-    var point = points;
     var pt, ev;
 
     // Sweep line event queue
@@ -46,11 +45,15 @@ Voronoi = function(points) {
 
     // Initialize event queue
     for (var i = 0; i < points.length; ++i) {
-        var evt = {x:points[i].x,
+        var evt = {ox:points[i].x,
+                  oy:points[i].y,
+                  x:points[i].x,
                   y:points[i].y,
                   p:points[i],
                   type:SITE, valid:true};
-        pq.enqueue(points[i].x, evt);
+        evt.p.x += (Math.random()-0.5)*EPS;
+        evt.x = evt.p.x;
+        pq.enqueue(evt.p.x, evt);
     }
 
     // Current sweep line location

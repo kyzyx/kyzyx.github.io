@@ -51,7 +51,9 @@ Voronoi = function(points) {
                   y:points[i].y,
                   p:points[i],
                   type:SITE, valid:true};
-        evt.p.x += (Math.random()-0.5)*EPS;
+        var dx = (Math.random()+1)*EPS;
+        if (Math.random() > 0.5) dx = -dx;
+        evt.p.x += dx;
         evt.x = evt.p.x;
         pq.enqueue(evt.p.x, evt);
     }

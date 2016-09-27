@@ -30,6 +30,9 @@ I recieved my B.S.E. in Computer Science from Princeton University, where I did 
 My current research involves capturing lighting and reflectance in indoor scenes. Using this data we
 can edit and rerender the scene with accurate illumination, shadows, and lighting effects.
 
+Edward Zhang, Michael F. Cohen, Brian Curless. 2016. "Emptying, Refurnishing, and Relighting Indoor Spaces". <i>ACM Transactions on Graphics (Proceedings of SIGGRAPH Asia 2016)</i> <br>
+[Project Page]({% post_url 2016-09-27-emptying-refurnishing-and-relighting-indoor-spaces %})
+
 ## Blog
 <ul class="posts">
   {% for post in site.posts limit:2 %}

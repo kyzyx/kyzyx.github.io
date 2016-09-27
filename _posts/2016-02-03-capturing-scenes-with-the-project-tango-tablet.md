@@ -59,7 +59,7 @@ imagery). This minimizes the impact of two problems in reconstruction:
   you can see their scans only capturing the interesting, desk-heavy areas
   of offices and stopping suspiciously once they near the ceiling.
 
-So the Tango is a decent device for doing scans of rooms. How do we do it?
+So the Tango is a decent device for scanning rooms. How do we do it?
 
 ## <a name="capture"></a>Capture Process ##
 We use a two-pass capture procedure for optimal registration. In the first pass,
@@ -201,7 +201,7 @@ See the [previous post]({% post_url 2016-02-02-3d-hdr-scene-capture %}) for an e
     a hat function. For an 8-bit value $$x$$, our per-channel confidence is
     $$c = 1 - \frac{|x-128|}{128}$$ (carefully chosen so that a saturated pixel
     has a small but nonzero confidence).
-15. As step 11 above, associate pixels with nonzero confidence to vertices
+15. As step 4 above, associate pixels with nonzero confidence to vertices
 16. Take a weighted mean or weighted median of all associated pixels to get
     a single HDR vertex color. The weight we use is proportional to the confidence
     and the differential form factor between the vertex and the camera pixel. If

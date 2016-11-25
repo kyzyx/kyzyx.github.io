@@ -43,8 +43,8 @@ website.
 
 Some content of interest that I will not be porting over:
 
-* [My tutorials on using the Kinect for Windows SDK V1 in C++.](http://www.cs.princeton.edu/~edwardz/tutorials/index.html)
-* [Results of assigned coursework in graphics](http://www.cs.princeton.edu/~edwardz/courses.html) that I took at Princeton.
+* [My tutorials on using the Kinect for Windows SDK V1 in C++.](http://homes.cs.washington.edu/~edzhang/tutorials/index.html)
+* [Results of assigned coursework in graphics](http://homes.cs.washington.edu/~edzhang/courses.html) that I took at Princeton.
 
 ## Future Content ##
 

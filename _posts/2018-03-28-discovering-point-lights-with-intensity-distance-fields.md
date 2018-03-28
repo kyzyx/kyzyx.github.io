@@ -27,6 +27,8 @@ lights and determine all light intensities. We demonstrate the
 success of this method in a large set of 2D synthetic scenes, and show that
 it extends to 3D, in both synthetic scenes and real-world scenes.
 
+{% include youtube_embed.html aspectratio="16by9" video="mvf6BHDUKts" %}
+
 ## Overview ##
 This is a largely theoretical paper, which was a refreshing change from our [previous paper]({% post_url 2016-09-27-emptying-refurnishing-and-relighting-indoor-spaces %}).
 In that work, the only truly manual step was specifying the positions of point lights; in this paper we make steps toward automating that process.

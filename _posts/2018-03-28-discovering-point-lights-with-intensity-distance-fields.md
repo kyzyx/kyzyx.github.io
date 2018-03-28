@@ -2,7 +2,7 @@
 layout: post
 title: "Discovering Point Lights with Intensity Distance Fields"
 description: ""
-category: 
+category: "research"
 tags: []
 ---
 {% include JB/setup %}

@@ -69,6 +69,6 @@ from [CGTrader](https://www.cgtrader.com) (users scopia, den\_krasik, buchak72, 
 and [Turbosquid](www.turbosquid.com) (user shop3ds). Several additional 3D models were obtained
 from the [Stanford 3D Scanning Repository](http://graphics.stanford.edu/data/3Dscanrep/).
 
-This work was supported by the NSF/Intel Visual and Experimental Computing Award
+This work was supported by the NSF/Intel Visual and Experiential Computing Award
 \#1538618, with additional support from Google, Microsoft, Pixar, and the
 University of Washington Animation Research Labs.

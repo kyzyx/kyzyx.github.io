@@ -156,7 +156,7 @@ to do after graduation. I put together some grad school applications, with
 the initial idea that I would wait and see what options they would add to my
 employment offers from Google and Facebook. 
 
-<img src="http://www.cs.washington.edu/news/KindlePilot/images/uwcselogo.jpg" class='img-right'/>
+<img src="https://www.cs.washington.edu/images/CSEWordmark.svg" class='img-right'/>
 
 ## Why Am I Doing A PhD? ##
 Between my positive experiences with the Princeton graphics group

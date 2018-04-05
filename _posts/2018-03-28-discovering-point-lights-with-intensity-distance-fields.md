@@ -9,7 +9,7 @@ tags: []
 
 Paper at [CVPR 2018](http://cvpr2018.thecvf.com/).
 
-Edward Zhang, Michale F. Cohen, Brian Curless. 2018.  "Discovering Point Lights with Intensity Distance Fields". <i>The IEEE Conference on Computer Vision and Pattern Recognition (CVPR)</i>
+Edward Zhang, Michael F. Cohen, Brian Curless. 2018.  "Discovering Point Lights with Intensity Distance Fields". <i>The IEEE Conference on Computer Vision and Pattern Recognition (CVPR)</i>
 
 Project webpage at [http://grail.cs.washington.edu/projects/lightlocalization](http://grail.cs.washington.edu/projects/lightlocalization)
 

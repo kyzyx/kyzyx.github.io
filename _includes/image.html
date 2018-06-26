@@ -1,11 +1,24 @@
 <div class="image-wrapper">
     {% if include.image %}
-        <a href="{{BASE_PATH}}/images/{{include.image}}">
-            <img class="{{include.class}}" src="{{BASE_PATH}}/images/{{include.image}}" {{include.attrs}} />
-        </a>
+        {% if include.image contains " " %}
+            <table><tr>
+            {% assign imgs = include.image | split: ' ' %}
+            {% for img in imgs %}
+                <td style="padding: 0px;">
+                <a href="{{BASE_PATH}}/images/{{img}}">
+                    <img class="{{include.class}}" src="{{BASE_PATH}}/images/{{img}}" style="padding: 2px; width: {{ include.imagesize | default: "100"}}%" {{include.attrs}} />
+                </a>
+                </td>
+            {% endfor %}
+            </tr></table>
+        {% else %}
+            <a href="{{BASE_PATH}}/images/{{include.image}}">
+                <img class="{{include.class}}" src="{{BASE_PATH}}/images/{{include.image}}" style="width: {{ include.imagesize | default: "100"}}%" {{include.attrs}} />
+            </a>
+        {% endif %}
     {% else %}
         <a href="{{ include.url }}">
-            <img class="{{include.class}}" src="{{ include.url }}" {{include.attrs}} />
+            <img class="{{include.class}}" src="{{ include.url }}" style="width: {{ include.imagesize | default: "100"}}%" {{include.attrs}} />
         </a>
     {% endif %}
     {% if include.caption %}

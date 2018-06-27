@@ -59,7 +59,7 @@ scattering, which is hard to model traditionally. See the Digital Ira video abov
 skin rendering. Other materials such as cloth and sand are made up of small (but not microscopic) structures that
 play a large role in appearance even when you can't distinguish those structures.
 {% include image.html url="http://www.cs.dartmouth.edu/~wjarosz/publications/images/meng15granular-teaser.jpg" caption="Researchers at Disney show how to render sand castles. Meng et al., Multi-Scale Modelling and Rendering of Granular Materials, SIGGRAPH 2015." %}
-{% include image.html url="http://graphics.ucsd.edu/~iman/images/cloth_rendering_representative_image_md.png" caption="Work from UCSD showing how to render cloth. Sadeghi et al., A Practical Microcylinder Appearance Model for Cloth Rendering, SIGGRAPH 2013." %}
+{% include image.html image="posts/researchingraphics/cloth.png" caption="Work from UCSD showing how to render cloth. Sadeghi et al., A Practical Microcylinder Appearance Model for Cloth Rendering, SIGGRAPH 2013." %}
 
 </li>
 <li>
@@ -68,7 +68,8 @@ cartoony, like a Disney movie? Nonphotorealistic rendering research looks at how
 to do stylized rendering to achieve a certain effect.
 
 {% include image.html image="posts/researchingraphics/stylizedrendering.png" caption="Researchers at Pixar show how to automatically change the style of a 3D animation into a different one. Benard et al., Stylizing Animation by Example, SIGGRAPH 2013." %}
-{% include youtube_embed.html video="h-VfhjfNX1c?start=158" %}
+
+{% include youtube_embed.html vimeo="64407522#t=158s" %}
 
 </li>
 </ul>

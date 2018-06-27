@@ -4,7 +4,11 @@
     {% else %}
     <div class='embed-responsive embed-responsive-16by9'>
     {% endif %}
+    {% if include.vimeo %}
+    <iframe src="https://player.vimeo.com/video/{{ include.vimeo }}" class="embed-responsive-item"> </iframe>
+    {% else %}
     <iframe src="https://www.youtube.com/embed/{{ include.video }}" class="embed-responsive-item"> </iframe>
+    {% endif %}
 </div>
     {% if include.caption %}
         <div class='image-caption'>{{ include.caption }}</div>

@@ -49,10 +49,9 @@ Create a random graph with <input id='numnodes' size='3' maxlength='4' value='10
 
 <div class='btn-group' data-toggle='buttons' id='animatetypes'>
 <label class='btn btn-primary'>
-    <input type='radio' name='animatetype' id='animatetypecolor' value='color'>Encode Pagerank with node color</label>
-    </label>
+    <input type='radio' name='animatetype' id='animatetypecolor' value='color'/>Encode Pagerank with node color</label>
 <label class='btn btn-primary active'>
-    <input type='radio' name='animatetype' id='animatetypesize' value='size'>Encode Pagerank with node size</label>
+    <input type='radio' name='animatetype' id='animatetypesize' value='size'/>Encode Pagerank with node size</label>
 </div>
 
 <button id='animate' type="button" class="btn btn-default">     Animate: Single Node with Pagerank</button>

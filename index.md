@@ -18,7 +18,7 @@ customjs:
 #### Email: <edzhang@cs.washington.edu> ####
 
 <h2 style="clear: both"> About </h2>
-I'm a PhD student in [Computer Science and Engineering](http://www.cs.washington.edu) at the University of Washington,
+I'm a PhD student in the [Paul G. Allen School of Computer Science and Engineering](http://www.cs.washington.edu) at the University of Washington,
 supervised by [Brian Curless](http://homes.cs.washington.edu/~curless/) and [Michael Cohen](http://research.microsoft.com/en-us/um/people/cohen/).
 I'm broadly interested in computer graphics and vision; I also have interests in interfaces for 3D interaction.
 

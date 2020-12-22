@@ -77,3 +77,6 @@ Here is an example of our intrinsic decomposition on a real image:
   {% include image.html image="shadowremoval/results1.png" caption="Synthetic scenes. We compare our system to two object removal baselines: an image-to-image translation network based on Pix2Pix which is supplied with our renderings of the proxy scene, and a state of the art inpainting method that inpaints both the removed object and an explicitly specified shadow mask."%}
   {% include image.html image="shadowremoval/results2.png" caption="Real scenes. We compare our system to two object removal baselines: an image-to-image translation network based on Pix2Pix which is supplied with our renderings of the proxy scene, and a state of the art inpainting method that inpaints both the removed object and an explicitly specified shadow mask."%}
   {% include image.html image="shadowremoval/results5.png" caption="More results on real scenes."%}
+
+## Acknowledgements ##
+This work was supported by Google and the University of Washington Reality Lab.

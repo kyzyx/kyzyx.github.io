@@ -35,7 +35,12 @@ and then render the model directly. However, as alluded to previously, directly 
 some unavoidable inaccuracies.
 
 The *differential rendering* process from Debevec's [Rendering Synthetic Objects into Real Scenes](https://www.pauldebevec.com/Research/IBL/) work
-has been the only method that bridges the gap between renderings of approximate (edited) scene models and the original input image\*. 
+has been the only method that bridges the gap between renderings of approximate (edited) scene models and the original input image<a data-toggle='tooltip' data-placement='bottom' title="Recent neural rerendering methods do try to approach this in a general image-to-image translation way. However these are more in the vein of style transfer and don't try to reason about shadows or light propagation." href='#'>\*</a>. 
+<script type='text/javascript'>
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+</script>
 
 {% include image.html image="shadowremoval/differential_inserting.png" caption="Toy example of differential rendering for inserting a virtual sphere onto a tabletop. The approximate model of the tabletop doesn't contain the checkerboard pattern. Taking the difference between the two renderings of the approximate model and applying it to the input image gives us a shadow on top of the checkerboard pattern."%}
 

@@ -182,7 +182,7 @@ when the axis of rotation is almost perpendicular to the view direction.
 Blender does this for all rotations.
 {% include image.html image="posts/manipulators/blender_rotation.gif" caption="Single-axis rotation in Blender, which always uses the view-space circle mapping. The fact that we no longer keep the same point under the cursor is obscured by the fact that the manipulator itself is hidden." imagesize="75"%}
 
-The game-engines (Unity and Unreal Engine) instead use a different physically-motivated paradigm, which (approximately) obeys the "keep things under the cursor" rule of thumb when mouse movements remain inside the manipulator, but extend more naturally to movements beyond the manipulator.
+The game engines (Unity and Unreal Engine) instead use a different physically-motivated paradigm, which (approximately) obeys the "keep things under the cursor" rule of thumb when mouse movements remain inside the manipulator, but extend more naturally to movements beyond the manipulator.
 The physical analogy is a single roller in a roller conveyor (used at airport security or at grocery stores); to spin one of these, you run your finger across the roller. If your fingers were very long, you could spin a single roller by a lot in a single motion by touching the roller with the base of your finger and then gliding the entire length of your finger over the roller.
 
 {% include image.html image="posts/manipulators/roller.png" caption="Single-axis rotation is like spinning a roller." imagesize="50" %}

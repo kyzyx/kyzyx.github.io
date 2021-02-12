@@ -123,17 +123,17 @@ projected onto the plane (blue cross) going through the object center, with norm
 The mouse release point (red circle) is similarly projected onto the plane (red cross). The final translation (green arrow) is the vector between the blue cross and the red cross." %}
 
 For single-axis translations, the 3D axis of translation determines a 2D line on the screen.
-We don't want to force the user to keep their mouse on this line, so we instead project
-the mouse position onto the 2D line, where the 2D line is formed from the projection of the
-start point onto the screen plane (*o*) and the projection of the axis vector onto the screen plane (*v*). This projection is really just finding the nearest
-point on the line to the mouse release point; if we represent this nearest point parametrically, *p = o + vt*,
-then it is straightforward to then use the same *t* to determine the
-corresponding 3D point on the axis. We set the translation to be the vector between this point and
-the originally clicked 3D point.
+We don't want to force the user to keep their mouse on this line, so we find the closest point to the
+camera ray through the mouse position that lies on the axis of translation. This involves a bit of geometry (which I won't get into
+here) using the fact that the segment representing the closest distance between two lines
+is perpendicular to both lines. A reference can be found in [Distance between Lines](http://geomalgorithms.com/a07-_distance.html).
+Once we've computed the closest point to the camera ray on the axis of translation,
+we set the translation to be the vector between this point and the originally clicked 3D point.
 (Observation: Unity doesn't follow this "keep things under the mouse cursor" method for single-axis translations - it uses some kind of fixed scale)
 
 {% include image.html image="posts/manipulators/diagram_singleaxis.png" caption="Single-axis translation. The initially clicked point (blue circle) corresponds to
-the origin of the object to be manipulated (blue cross). The axis of translation (defined by which arrow on the manipulator was clicked) is projected into 2D screen coordinates (inset)), and the mouse release point (red solid circle) is first projected onto this line, resulting in the red outlined circle. This point is then projected back into 3D (red cross).
+the origin of the object to be manipulated (blue cross). The mouse position (red circle) defines to a camera ray (red dotted line). The smallest distance between
+the two lines (camera ray and axis of translation) is shown by the magenta dotted line; the closest point on the axis of translation is given by the red cross.
 The final translation (green arrow) is the vector between the blue cross and the red cross."%}
 
 For single-axis and double-axis translations, you can run into some difficulties when an axis
@@ -286,3 +286,7 @@ controllers to make VR editing modes
 ([Unreal Engine VR Editor](https://docs.unrealengine.com/latest/INT/Engine/Editor/VR/),
 [Unity EditorVR](https://blogs.unity3d.com/2016/12/15/editorvr-experimental-build-available-today/),
 [Sixense MakeVR](https://www.viveport.com/apps/23d40515-641c-4adb-94f5-9ba0ed3deed5)), which is really exciting and bodes well for the future of 3D modelling.
+
+---
+
+###### (02/12/2021) Fixed some errors in single-axis translation. Credit to Jakub Jeziorski for pointing them out. ######

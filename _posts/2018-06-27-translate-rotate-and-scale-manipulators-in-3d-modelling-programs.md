@@ -123,16 +123,17 @@ projected onto the plane (blue cross) going through the object center, with norm
 The mouse release point (red circle) is similarly projected onto the plane (red cross). The final translation (green arrow) is the vector between the blue cross and the red cross." %}
 
 For single-axis translations, the 3D axis of translation determines a 2D line on the screen.
-We don't want to force the user to keep their mouse on this line, so we find the closest point to the
-camera ray through the mouse position that lies on the axis of translation. This involves a bit of geometry (which I won't get into
-here) using the fact that the segment representing the closest distance between two lines
+We don't want to force the user to keep their mouse on this line, so we find the closest point on the line to compute the translation.
+In 3D this means finding the closest point to the
+camera ray through the mouse position that lies on the axis of translation. This involves a bit of geometry, using the fact that the
+segment representing the shortest distance between two lines
 is perpendicular to both lines. A reference can be found in [Distance between Lines](http://geomalgorithms.com/a07-_distance.html).
 Once we've computed the closest point to the camera ray on the axis of translation,
 we set the translation to be the vector between this point and the originally clicked 3D point.
 (Observation: Unity doesn't follow this "keep things under the mouse cursor" method for single-axis translations - it uses some kind of fixed scale)
 
 {% include image.html image="posts/manipulators/diagram_singleaxis.png" caption="Single-axis translation. The initially clicked point (blue circle) corresponds to
-the origin of the object to be manipulated (blue cross). The mouse position (red circle) defines to a camera ray (red dotted line). The smallest distance between
+the origin of the object to be manipulated (blue cross). The mouse position (red circle) defines a camera ray (red dotted line). The smallest distance between
 the two lines (camera ray and axis of translation) is shown by the magenta dotted line; the closest point on the axis of translation is given by the red cross.
 The final translation (green arrow) is the vector between the blue cross and the red cross."%}
 

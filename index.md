@@ -30,7 +30,7 @@ I recieved my B.S.E. in Computer Science from Princeton University, where I did 
 My current research involves capturing lighting and reflectance in indoor scenes. Using this data we
 can edit and rerender the scene with accurate illumination, shadows, and lighting effects.
 
-Edward Zhang, Ricardo Martin-Brualla, Janne Kontkanen, Brian Curless. 2020. "No Shadow Left Behind: Removing Objects and their Shadows using Approximate Lighting and Geometry". <i>The IEEE Conference on Computer Vision and Pattern Recognition (CVPR) 2020, to appear</i><br>
+Edward Zhang, Ricardo Martin-Brualla, Janne Kontkanen, Brian Curless. 2021. "No Shadow Left Behind: Removing Objects and their Shadows using Approximate Lighting and Geometry". <i>The IEEE Conference on Computer Vision and Pattern Recognition (CVPR) 2021, to appear</i><br>
 [Project Page]({% post_url 2020-12-21-no-shadow-left-behind-removing-objects-and-their-shadows-using-approximate-lighting-and-geometry %}) | [Arxiv](https://arxiv.org/abs/2012.10565)
 
 Edward Zhang, Michael F. Cohen, Brian Curless. 2018.  "Discovering Point Lights with Intensity Distance Fields". <i>The IEEE Conference on Computer Vision and Pattern Recognition (CVPR) 2018</i><br>

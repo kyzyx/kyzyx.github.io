@@ -9,28 +9,27 @@ customjs:
 
 <img src="{{ BASE_PATH }}/images/home/edzhang.jpg" class='img-left'/>
 
-#### Graduate Student ####
+#### Research Scientist ####
 
-#### Computer Science and Engineering ####
-
-#### University of Washington ####
+#### Apple, Inc. ####
 
 #### Email: <edzhang@cs.washington.edu> ####
 
 <h2 style="clear: both"> About </h2>
-I'm a PhD student in the [Paul G. Allen School of Computer Science and Engineering](http://www.cs.washington.edu) at the University of Washington,
+I am currently a Research Scientist at Apple in Seattle. My research interests lie at the intersection of computer graphics and computer vision, with a focus on AR/VR applications.
+
+Previously, I received my PhD from the [Paul G. Allen School of Computer Science and Engineering](http://www.cs.washington.edu) at the University of Washington,
 supervised by [Brian Curless](http://homes.cs.washington.edu/~curless/) and [Michael Cohen](http://research.microsoft.com/en-us/um/people/cohen/).
-I'm broadly interested in computer graphics and vision; I also have interests in interfaces for 3D interaction.
 
 I recieved my B.S.E. in Computer Science from Princeton University, where I did research with 
 [Rebecca Fiebrink](http://www.cs.princeton.edu/~fiebrink/Rebecca_Fiebrink/welcome.html) and
 [Szymon Rusinkiewicz](http://www.cs.princeton.edu/~smr/). 
 
 ## Research
-My current research involves capturing lighting and reflectance in indoor scenes. Using this data we
+My PhD research involved capturing lighting and reflectance in indoor scenes. Using this data we
 can edit and rerender the scene with accurate illumination, shadows, and lighting effects.
 
-Edward Zhang, Ricardo Martin-Brualla, Janne Kontkanen, Brian Curless. 2021. "No Shadow Left Behind: Removing Objects and their Shadows using Approximate Lighting and Geometry". <i>The IEEE Conference on Computer Vision and Pattern Recognition (CVPR) 2021, to appear</i><br>
+Edward Zhang, Ricardo Martin-Brualla, Janne Kontkanen, Brian Curless. 2021. "No Shadow Left Behind: Removing Objects and their Shadows using Approximate Lighting and Geometry". <i>The IEEE Conference on Computer Vision and Pattern Recognition (CVPR) 2021</i><br>
 [Project Page]({% post_url 2020-12-21-no-shadow-left-behind-removing-objects-and-their-shadows-using-approximate-lighting-and-geometry %}) | [Arxiv](https://arxiv.org/abs/2012.10565)
 
 Edward Zhang, Michael F. Cohen, Brian Curless. 2018.  "Discovering Point Lights with Intensity Distance Fields". <i>The IEEE Conference on Computer Vision and Pattern Recognition (CVPR) 2018</i><br>

@@ -5,9 +5,8 @@ description: ""
 category: "projects"
 tags: [interactive]
 customjs:
-    - https://cdn.rawgit.com/google/closure-library/master/closure/goog/base.js
     - voronoi/geometry.js
-    - voronoi/voronoi.js
+    - voronoi/voronoi_compiled.js
     - voronoi/interaction.js
     - voronoi/init.js
 customstyles:
@@ -148,7 +147,10 @@ Fortune's algorithm relies on the data structures provided by Google's
 <a href='http://code.google.com/p/closure-library/'>Closure</a>
 javascript library. I also use <a href='http://www.jquery.com'>jQuery</a>
 and <a href='http://www.jqueryui.com'>jQueryUI</a> libraries to provide
-the interaction widgets as well as helper functions for event handling.
+the interaction widgets as well as helper functions for event handling. If
+you're viewing the source, note that
+<a href='/js/voronoi/voronoi_compiled.js'>voronoi_compiled.js</a> is
+a compiled version of <a href='/js/voronoi/voronoi.js'>voronoi.js</a>
 
 -----------------------------------------------------------------------------
 

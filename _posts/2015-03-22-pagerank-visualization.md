@@ -5,7 +5,7 @@ description: ""
 category: "projects"
 tags: [interactive]
 customjs:
-    - http://d3js.org/d3.v3.min.js
+    - https://d3js.org/d3.v3.min.js
     - prvis/colorbrewer.js
     - prvis/generategraph.js
     - prvis/pagerank.js

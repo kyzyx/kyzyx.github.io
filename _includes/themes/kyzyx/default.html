@@ -62,7 +62,9 @@
     {% endfor %}
 
   </head>
-
+  {% if site.enable_tracking %}
+  {% include JB/analytics %}
+  {% endif %}
   <body>
     <div id="wrap">
       <nav class="navbar navbar-default navbar-static-top" role="navigation">
@@ -102,10 +104,6 @@
         </p>
       </div>
     </div>
-
-    {% if site.enable_tracking %}
-    {% include JB/analytics %}
-    {% endif %}
 
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>

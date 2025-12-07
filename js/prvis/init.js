@@ -83,7 +83,7 @@ $(document).ready(function() {
         r = Renderer(svg, g);
         prm = Pagerank(svg, r, $('#alphaslider').slider('getValue'), 1000/$('#intervalslider').slider('getValue'));
         prm.init();
-        prm.converge();
+        // prm.converge(); // start graph in converged state
         r.getEventManager().setPageRankManager(prm);
     });
 

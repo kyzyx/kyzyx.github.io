@@ -198,6 +198,7 @@ var Pagerank = function(svg, renderer, a, itr) {
             return !converged;
         },
         converge:function() {
+            if (!$('#autoconverge').is(':checked')) return;
             if (animateinterval) stopanimation();
             while (that.iterate(false));
             var maxpr = 0;
@@ -206,7 +207,7 @@ var Pagerank = function(svg, renderer, a, itr) {
                 if (node.pr > maxpr) maxpr = node.pr;
                 if (node.pr < minpr) minpr = node.pr;
             });
-            
+
             setDomains(minpr, maxpr);
 
             runNodeTransitions(iterrate/2);

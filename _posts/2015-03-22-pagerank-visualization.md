@@ -56,6 +56,8 @@ Create a random graph with <input id='numnodes' size='3' maxlength='4' value='10
 
 <button id='animate' type="button" class="btn btn-default">     Animate: Single Node with Pagerank</button>
 <button id='equalanimate' type="button" class="btn btn-default">Animate: Uniform Distribution</button>
+<label><input type='checkbox' id='autoconverge' checked> Automatically Converge</label>
+
 
 <div id='graph' width='100%'>
 </div>
